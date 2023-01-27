@@ -8,8 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>الرئيسية</title>
 </head>
 
 <style>
@@ -67,6 +67,10 @@
         z-index: 10;
     }
 
+    #links img{
+        cursor: pointer;
+    }
+
     #links {
         display: flex;
         justify-content: space-between;
@@ -106,28 +110,41 @@
         color: #C58940;
     }
 
-    #wid{
+    #nav i {
+        font-size: 24px;
+        color: #C58940;
+        display: none;
+        padding-left: 18px;
+    }
+
+    #ic {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    #cards{
+    #wid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 0;
+    }
+
+    #cards {
         display: flex;
         flex-wrap: wrap;
-        padding: 80px 120px;
         justify-content: center;
         align-items: center;
     }
 
-    .card{
+    .card {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         padding: 20px 20px;
-        border: 1px solid hsl(33, 53%, 51%,0.3);
+        border: 1px solid hsl(33, 53%, 51%, 0.3);
         border-radius: 12px;
         box-shadow: 10px 15px 20px rgb(0, 0, 0, 0.04);
         cursor: pointer;
@@ -136,22 +153,23 @@
         margin: 20px 50px;
     }
 
-    .card:hover{
+    .card:hover {
         box-shadow: 10px 15px 20px rgb(0, 0, 0, 0.08);
     }
 
-    .card span,.card i{
+    .card span,
+    .card i {
         font-size: 64px;
         color: #E5BA73;
         padding-bottom: 12px;
     }
 
-    .card h3{
+    .card h3 {
         font-weight: 100;
         font-size: 32px;
     }
 
-    footer{
+    footer {
         background-color: #FAF8F1;
         display: flex;
         flex-direction: column;
@@ -161,7 +179,7 @@
         align-items: center;
     }
 
-    footer #logo{
+    footer #logo {
         display: flex;
         flex-direction: column;
         width: 25%;
@@ -170,26 +188,91 @@
         text-align: center;
     }
 
-    footer #logo p{
+    footer #logo p {
         padding-top: 8px;
     }
 
-    footer #pages{
+    footer #pages {
         display: flex;
         flex-wrap: wrap;
         padding: 30px 0;
         justify-content: space-between;
-        width: 60%;
+        align-items: center;
+        text-align: center;
     }
 
-    footer #pages a h6{
+    footer #pages a h6 {
         color: #E5BA73;
         font-weight: 600;
+        padding: 0 10px;
     }
 
-    footer #pages a h6:hover{
+    footer #pages a h6:hover {
         font-weight: 800;
         color: #C58940;
+    }
+
+    #smallList {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #FAF8F1;
+        padding: 20px;
+        text-align: center;
+        display: none;
+    }
+
+    #smallList #links2 a h6 {
+        padding: 12px 0;
+        color: #E5BA73;
+    }
+
+    #smallList #links2 a h6:hover {
+        padding: 12px 0;
+        color: #C58940;
+        font-weight: 800;
+    }
+
+    @media screen and (max-width:992px) {
+        #links a {
+            display: none;
+        }
+
+        #links img {
+            padding-left: 0;
+        }
+
+        #nav i {
+            display: block;
+        }
+
+    }
+
+    @media screen and (max-width:576px) {
+        footer #pages a {
+            width: 100%;
+        }
+
+    }
+
+    @media screen and (max-width:392px) {
+        #nav button span {
+            display: none;
+        }
+
+        #nav i {
+            padding-left: 5px;
+        }
+
+        #links img {
+            width: 80%;
+        }
+
+        .card{
+            padding: 20px 0;
+        }
+
     }
 </style>
 
@@ -198,30 +281,60 @@
     <section id="nav">
         <div id="links">
             <img src="C:\wamp64\www\sfiProject\img\logo.png" alt="...">
-            <a href="#">
+            <a href="Home.html">
                 <h6 class="active">الرئيسية</h6>
             </a>
-            <a href="#">
+            <a href="users.html">
                 <h6>المستخدمين</h6>
             </a>
-            <a href="">
+            <a href="projects.html">
                 <h6>المشاريع</h6>
             </a>
-            <a href="#">
+            <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            <a href="#">
+            <a href="activ.html">
                 <h6>الأنشطة</h6>
             </a>
-            <a href="#">
+            <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
-            <a href="#">
+            <a href="nickname.html">
                 <h6>المسميات</h6>
             </a>
         </div>
 
-        <button><span class="material-symbols-outlined"> logout </span></button>
+        <div id="ic">
+            <i class="fa fa-list-ul" aria-hidden="true"></i>
+            <button><span class="material-symbols-outlined"> logout </span></button>
+        </div>
+    </section>
+
+    <section id="smallList">
+        <div id="links2">
+            <a href="Home.html">
+                <h6>الرئيسية</h6>
+            </a>
+            <a href="users.html">
+                <h6>المستخدمين</h6>
+            </a>
+            <a href="projects.html">
+                <h6>المشاريع</h6>
+            </a>
+            <a href="parti.html">
+                <h6>المشاركين</h6>
+            </a>
+            <a href="activ.html">
+                <h6>الأنشطة</h6>
+            </a>
+            <a href="programs.html">
+                <h6>البرامج</h6>
+            </a>
+            <a href="nickname.html">
+                <h6>المسميات</h6>
+            </a>
+        </div>
+        <a href="#"><h6> تسجيل الخروج</h6></a>
     </section>
 
     <div id="wid">
@@ -233,32 +346,32 @@
                 <h3>المستخدمين</h3>
             </div>
             <div class="card">
-               <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                <i class="fa fa-pie-chart" aria-hidden="true"></i>
                 <h3>المشاريع</h3>
             </div>
             <div class="card">
                 <span class="material-symbols-outlined">
                     group_add
-                    </span>
+                </span>
                 <h3>المشاركين</h3>
             </div>
             <div class="card">
-               <i class="fa fa-font-awesome" aria-hidden="true"></i>
+                <i class="fa fa-font-awesome" aria-hidden="true"></i>
                 <h3>المسميات</h3>
             </div>
             <div class="card">
                 <span class="material-symbols-outlined">
                     sprint
-                    </span>
+                </span>
                 <h3>الانشطة</h3>
             </div>
             <div class="card">
                 <span class="material-symbols-outlined">
                     energy_program_time_used
-                    </span>
+                </span>
                 <h3>البرامج</h3>
             </div>
-            
+
         </section>
     </div>
 
@@ -266,33 +379,68 @@
 
         <div id="logo">
             <img src="C:\wamp64\www\sfiProject\img\logo.png" alt="...">
-            <p>فلسطين، بيت لحم، شارع القدس الخليل -  نزلة غزال - بالقرب من فرشات حرباوي
+            <p>فلسطين، بيت لحم، شارع القدس الخليل - نزلة غزال - بالقرب من فرشات حرباوي
         </div>
 
         <div id="pages">
-            <a href="#">
-                <h6 class="active">الرئيسية</h6>
+            <a href="Home.html">
+                <h6>الرئيسية</h6>
             </a>
-            <a href="#">
+            <a href="users.html">
                 <h6>المستخدمين</h6>
             </a>
-            <a href="">
+            <a href="projects.html">
                 <h6>المشاريع</h6>
             </a>
-            <a href="#">
+            <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            <a href="#">
+            <a href="activ.html">
                 <h6>الأنشطة</h6>
             </a>
-            <a href="#">
+            <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
-            <a href="#">
+            <a href="nickname.html">
                 <h6>المسميات</h6>
             </a>
         </div>
     </footer>
+
+    <script>
+        $(document).ready(function(){
+            $("#nav i").click(function(){
+               $("#smallList").toggle(300); 
+            });
+
+            $("#links img").click(function(){
+                window.location.replace("Home.html");
+            });
+
+            $("#nav button span").click(function(){
+                window.location.replace("login.html");
+            });
+
+            $(".card:nth-child(1)").click(function(){
+                window.location.replace("users.html");
+            });
+            $(".card:nth-child(2)").click(function(){
+                window.location.replace("projects.html");
+            });
+            $(".card:nth-child(3)").click(function(){
+                window.location.replace("parti.html");
+            });
+            $(".card:nth-child(4)").click(function(){
+                window.location.replace("activ.html");
+            });
+            $(".card:nth-child(5)").click(function(){
+                window.location.replace("programs.html");
+            });
+            $(".card:nth-child(6)").click(function(){
+                window.location.replace("nickname.html");
+            });
+        });
+    </script>
 
 </body>
 
