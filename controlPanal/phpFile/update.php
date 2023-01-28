@@ -11,13 +11,13 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$id = $_GET["id"];
-$table = $_GET["table"];
-$prePage = $_GET["prePage"];
+$sql = $_POST["sqlup"];
 
-$sql = "DELETE FROM `".$table."` WHERE `id` = '".$id."'";
 
-$conn->query($sql);
-header("Location: $prePage");
+if ($conn->query($sql) === TRUE) {
+    echo "New record update successfully";
+  } else {
+    echo $conn->error;
+  }
 
 ?>

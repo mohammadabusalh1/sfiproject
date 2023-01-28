@@ -9,7 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>الرئيسية</title>
+    <title>المستخدمين</title>
 </head>
 
 <style>
@@ -54,6 +54,23 @@
         font-weight: 700;
         font-size: 16px;
         transition: 0.7s;
+    }
+
+    button {
+        background-color: #FAEAB1;
+        /* Sets the background color of the button to blue */
+        color: black;
+        /* Sets the text color of the button to white */
+        padding: 5px 10px;
+        /* Adds padding to the button */
+        border-radius: 5px;
+        /* Rounds the corners of the button */
+        border: none;
+        /* Removes the border from the button */
+        cursor: pointer;
+        /* Changes the cursor to a pointer when hovering over the button */
+        font-size: 16px;
+        /* Sets the font size of the button text */
     }
 
     #nav {
@@ -330,9 +347,31 @@
             padding: 8px 54px;
         }
     }
+
+    #edit {
+        display: none;
+    }
 </style>
 
 <body dir="rtl">
+
+    <script>
+        function reload(sql) {
+            $.ajax({
+                url: "phpFile/show.php",
+                data: { sql: sql },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> <th>الحذف</th><th>النعديل</th></tr>";
+                    for (i = 0; i < data.length; i++) {
+                        ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td><button data-id=" + data[i].username + " class=\"remove-btn\">حذف</button></td> <td><button data-id=" + data[i].id + " class=\"edit-btn\">تعديل</button></td></tr>";
+                    }
+                    $(".table").html(ht);
+                }
+            });
+        }
+    </script>
 
     <section id="nav">
         <div id="links">
@@ -402,15 +441,16 @@
             <h6>كلمة المرور</h6>
             <input type="password" id="password">
             <select name="pir" id="pir">
-                <option value="mangear">مشرف</option>
-                <option value="emp">موظف</option>
+                <option value="admin">مشرف</option>
+                <option value="user">موظف</option>
             </select>
-            <button class="Darkbutton">أضف</button>
+            <button id="add" class="Darkbutton">أضف</button>
+            <button id="edit" class="Darkbutton">تعديل</button>
         </div>
 
         <script>
             $(document).ready(function () {
-                $("#info button").click(function () {
+                $("#add").click(function () {
                     nameAdd = $("#name").val();
                     passAdd = $("#password").val();
                     pirAdd = $("#pir").val();
@@ -426,20 +466,9 @@
                     });
 
 
-                    sql1 = "SELECT * FROM `users`";
-                    $.ajax({
-                        url: "phpFile/show.php",
-                        data: { sql: sql1 },
-                        dataType: "json",
-                        type: "post",
-                        success: function (data1) {
-                            ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> </tr>";
-                            for (i = 0; i < data1.length; i++) {
-                                ht += "<tr><td>" + data1[i].username + "</td><td>" + data1[i].password + "</td><td>" + data1[i].permission + "</td></tr>";
-                            }
-                            $(".table").html(ht);
-                        }
-                    });
+                    sql = "SELECT * FROM `users`";
+                    reload(sql);
+
 
                 });
             });
@@ -494,46 +523,90 @@
                     if (val == "") {
                         sql = "SELECT * FROM `users`";
                     } else {
-                        sql = "SELECT * FROM `users` WHERE `permission` = '" + val + "' || `username`='" + val + "' || `password` ='" + val + "'";
+                        sql = "SELECT * FROM `users` WHERE `permission` like '%" + val + "%' || `username` like '%" + val + "%' || `password` like '%" + val + "%'";
                     }
-                    $.ajax({
-                        url: "phpFile/show.php",
-                        data: { sql: sql },
-                        dataType: "json",
-                        type: "post",
-                        success: function (data) {
-                            ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> <th>الحذف</th></tr>";
-                            for (i = 0; i < data.length; i++) {
-                                ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td style=\"color: red;\" id=\"remove\">حذف</td></tr>";
-                            }
-                            $(".table").html(ht);
-                        }
-                    });
+                    reload(sql);
                 });
             });
         </script>
 
-        <table class="table">
+        <table class="table" id="table">
 
         </table>
 
         <script>
             $(document).ready(function () {
                 sql = "SELECT * FROM `users`";
+                reload(sql);
+            });
+
+            $(document).on('click', '.remove-btn', function () {
+                id = $(this).data('id');
+                table = "users";
+                feild = "username";
+                $.ajax({
+                    url: "phpFile/remove.php",
+                    data: { id: id, table: table, feild: feild },
+                    type: "post",
+                    success: function (out) {
+                        reload("SELECT * FROM `users`");
+                        alert(out);
+                    }
+                });
+            });
+
+            let id;
+            $(document).on('click', '.edit-btn', function () {
+                id = $(this).data('id');
+                sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
                 $.ajax({
                     url: "phpFile/show.php",
                     data: { sql: sql },
-                    dataType: "json",
                     type: "post",
-                    success: function (data) {
-                        ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> <th>الحذف</th></tr>";
-                        for (i = 0; i < data.length; i++) {
-                            ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td><a style=\"color: red;\" href=\"remove.php?id="+data[i].id+"&&table=users&&prePage=users.html\">حذف</a></td></tr>";
-                        }
-                        $(".table").html(ht);
+                    dataType: "json",
+                    success: function (out) {
+
+                        name = out[0].username;
+                        password = out[0].password;
+                        pir = out[0].permission;
+
+                        $("#name").val(name);
+                        $("#password").prop("type", "text");
+                        $("#password").val(password);
+                        $("#pir").val(pir);
+                        
+                        setTimeout(function () {
+                            window.location.replace("users.html#hero");
+                        }, 400);
+
+                        $("#add").toggle();
+                        $("#edit").toggle();
                     }
                 });
+            });
 
+            $("#edit").click(function () {
+                nameAdd = $("#name").val();
+                passAdd = $("#password").val();
+                pirAdd = $("#pir").val();
+                sqlup = "UPDATE `users` SET `username`='" + nameAdd + "',`password`='" + passAdd + "',`permission`='" + pirAdd + "' WHERE id = '" + id + "'";
+                $.ajax({
+                    url: "phpFile/update.php",
+                    data: { sqlup: sqlup },
+                    type: "post",
+                    success: function () {
+                        $("#name").val("");
+                        $("#password").prop("type", "password");
+                        $("#password").val("");
+
+                        $("#add").toggle();
+                        $("#edit").toggle();
+                        reload("SELECT * FROM `users`");
+                        setTimeout(function () {
+                            window.location.replace("users.html#table");
+                        }, 400);
+                    }
+                });
             });
         </script>
 
