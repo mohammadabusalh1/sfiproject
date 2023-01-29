@@ -214,12 +214,25 @@
     #info {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    #info div h6 {
+        padding-bottom: 8px;
+        font-weight: 200;
+    }
+
+    #part1 {
+        display: flex;
+        flex-direction: column;
         width: 40%;
     }
 
-    #info h6 {
-        padding-bottom: 8px;
-        font-weight: 200;
+    #part2 {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
     }
 
     input {
@@ -234,7 +247,7 @@
         padding: 80px 120px;
     }
 
-    #info select {
+    #info div select {
         padding: 8px 16px;
         border-radius: 8px;
         border: 1px solid hsl(33, 53%, 51%, 0.5);
@@ -312,6 +325,15 @@
             width: 100%;
         }
 
+        #part1 {
+            width: 100%;
+        }
+
+        #part2 {
+            width: 100%;
+            margin-top: 32px;
+        }
+
     }
 
     @media screen and (max-width:576px) {
@@ -325,6 +347,10 @@
 
         #tableDis input {
             width: 100%;
+        }
+
+        #hero {
+            padding: 80px 42px;
         }
 
     }
@@ -351,25 +377,47 @@
         }
     }
 
-    #info div button {
-        margin: 0;
-    }
-
     #info textarea {
         margin-bottom: 12px;
     }
 
-    #info div div {
+    #info div div div {
         display: flex;
         justify-content: space-between;
         align-items: center;
         text-align: center;
-        padding-bottom: 12px;
+        padding-bottom: 8px;
     }
 
-    #info div div select {
+    #info div div p {
+        padding-bottom: 16px;
+        color: #06283D;
+        cursor: pointer;
+    }
+
+    #info div div div select {
         width: 70%;
         margin: 0;
+    }
+
+    #edit {
+        display: none;
+    }
+
+    .more {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .more input {
+        margin: 0;
+    }
+
+    .dis {
+        display: none;
     }
 </style>
 
@@ -455,49 +503,258 @@
     </section>
 
     <section id="hero">
+
         <div id="info">
-            <h6>إسم المشروع</h6>
-            <input type="text" id="name">
-            <h6>قيمة المشروع</h6>
-            <input type="number" id="value">
-            <h6>فكرة المشروع</h6>
-            <textarea name="idea" id="idea" cols="10" rows="3"></textarea>
-            <button id="add" class="Darkbutton">أضف</button>
-            <div id="fin">
-                <h6> أسماء الممولين</h6>
-                <div>
-                    <select name="fins" id="fins">
-                    </select>
-                    <button class="Darkbutton">أضف</button>
-                </div>
+            <div id="part1">
+                <h6>إسم المشروع</h6>
+                <input type="text" id="name">
+                <h6>قيمة المشروع</h6>
+                <input type="number" id="value">
+                <h6>فكرة المشروع</h6>
+                <textarea name="idea" id="idea" cols="10" rows="3"></textarea>
             </div>
-            <div id="goals">
-                <h6>الأهداف</h6>
-                <div>
-                    <select name="goal" id="goal">
-                    </select>
-                    <button class="Darkbutton">أضف</button>
+
+            <div id="part2">
+                <div id="fin">
+                    <h6> أسماء الممولين</h6>
+                    <div>
+                        <select name="fins" id="fins">
+                            <script>
+                                function finReload(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].project_financier_name + "\">" + data[i].project_financier_name + "</option>";
+                                            }
+                                            $("#fins").html(ht);
+                                        }
+                                    });
+                                }
+
+                                finReload("SELECT * FROM `financier`");
+                            </script>
+                        </select>
+                        <button id="addFin" class="Darkbutton app">أضف</button>
+                        <button id="reamoveFin" class="Darkbutton dis">حذف</button>
+                    </div>
+                    <p id="moreFin">أضف المزيد؟</p>
+                    <span class="more" id="sFin">
+                        <input type="text" name="mFin" id="mFin" placeholder="إسم الممول">
+                        <button id="addMoreFin" class="Darkbutton ">أضف</button>
+                    </span>
                 </div>
-            </div>
-            <div id="areas">
-                <h6>المناطق المستهدفة</h6>
-                <div>
-                    <select name="area" id="area">
-                    </select>
-                    <button class="Darkbutton">أضف</button>
+                <div id="goals">
+                    <h6>الأهداف</h6>
+                    <div>
+                        <select name="goal" id="goal">
+                            <script>
+                                function goalReload(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].goal_name + "\">" + data[i].goal_name + "</option>";
+                                            }
+                                            $("#goal").html(ht);
+                                        }
+                                    });
+                                }
+
+                                goalReload("SELECT * FROM `goals`");
+                            </script>
+                        </select>
+                        <button id="addGoal" class="Darkbutton app">أضف</button>
+                        <button id="reamoveGoal" class="Darkbutton dis">حذف</button>
+                    </div>
+                    <p id="moreGoal">أضف المزيد؟</p>
+                    <span class="more" id="sGoal">
+                        <input type="text" name="mgoal" id="mgoal" placeholder="الهدف">
+                        <button id="addMoreGoal" class="Darkbutton ">أضف</button>
+                    </span>
                 </div>
+                <div id="areas">
+                    <h6>المناطق المستهدفة</h6>
+                    <div>
+                        <select name="area" id="area">
+                            <script>
+                                function areaReload(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].area_name + "\">" + data[i].area_name + "</option>";
+                                            }
+                                            $("#area").html(ht);
+                                        }
+                                    });
+                                }
+                                areaReload("SELECT * FROM `area`");
+                            </script>
+                        </select>
+                        <button id="addArea" class="Darkbutton app">أضف</button>
+                        <button id="reamoveArea" class="Darkbutton dis">حذف</button>
+                    </div>
+                    <p id="moreArea">أضف المزيد؟</p>
+                    <span class="more" id="sArea">
+                        <input type="text" name="mArea" id="mArea" placeholder="إسم المنطقة">
+                        <button id="addMoreArea" class="Darkbutton ">أضف</button>
+                    </span>
+                </div>
+                <div id="targets">
+                    <h6>الفئات المستهدفة</h6>
+                    <div>
+                        <select name="target" id="target">
+                            <script>
+                                function targetReload(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].target_group + "\">" + data[i].target_group + "</option>";
+                                            }
+                                            $("#target").html(ht);
+                                        }
+                                    });
+                                }
+                                targetReload("SELECT * FROM `target_groups`");
+                            </script>
+                        </select>
+                        <button id="addTarget" class="Darkbutton app">أضف</button>
+                        <button id="removeTarget" class="Darkbutton dis">حذف</button>
+                    </div>
+                    <p id="moreTarget">أضف المزيد؟</p>
+                    <span class="more" id="sTarget">
+                        <input type="text" name="mTarget" id="mTarget" placeholder="إسم الفئة">
+                        <button id="addMoreTarget" class="Darkbutton">أضف</button>
+                    </span>
+                </div>
+                <button id="add" class="Darkbutton">أضف</button>
+                <button id="edit" class="Darkbutton">تعديل</button>
             </div>
         </div>
 
-        <script>
+        <script id="addMoreButton">
+
+            function add(sql) {
+                $.ajax({
+                    url: "phpFile/add.php",
+                    data: { sqlAdd: sql },
+                    type: "post",
+                    success: function (out) {
+                        alert(out);
+                    }
+                });
+            }
+
+            $("#addMoreFin").click(function () {
+
+                mFin = $("#mFin").val();
+                if (mFin != "") {
+                    sql = "INSERT INTO `financier`(`project_financier_name`) VALUES ('" + mFin + "')";
+                    add(sql);
+                    finReload("SELECT * FROM `financier`");
+                } else {
+                    alert("value empty")
+                }
+            });
+
+            $("#addMoreGoal").click(function () {
+                mgoal = $("#mgoal").val();
+                if (mgoal != "") {
+                    sql = "INSERT INTO `goals`(`goal_name`) VALUES ('" + mgoal + "')";
+                    add(sql);
+                    goalReload("SELECT * FROM `goals`");
+                } else {
+                    alert("value empty")
+                }
+            });
+
+            $("#addMoreArea").click(function () {
+                mArea = $("#mArea").val();
+                if (mArea != "") {
+                    sql = "INSERT INTO `area`(`area_name`) VALUES ('" + mArea + "')";
+                    add(sql);
+                    areaReload("SELECT * FROM `area`");
+                } else {
+                    alert("value empty")
+                }
+            });
+
+            $("#addMoreTarget").click(function () {
+                mTarget = $("#mTarget").val();
+                if (mTarget != "") {
+                    sql = "INSERT INTO `target_groups`(`target_group`) VALUES ('" + mTarget + "')";
+                    add(sql);
+                    targetReload("SELECT * FROM `target_groups`");
+                } else {
+                    alert("value empty")
+                }
+            });
+        </script>
+
+        <script id="linkWithOtherTabels">
+            let fins;
+            let myArray = new Array();
+            $("#addFin").click(function () {
+                fins = $("#fins").val();
+                if (!myArray.includes(fins)) {
+                    myArray.push(fins);
+                }
+            });
+
+            let goal;
+            let goalArray = new Array();
+            $("#addGoal").click(function () {
+                goal = $("#goal").val();
+                if (!goalArray.includes(goal)) {
+                    goalArray.push(goal);
+                }
+            });
+
+            let area;
+            let areaArray = new Array();
+            $("#addArea").click(function () {
+                area = $("#area").val();
+                if (!areaArray.includes(area)) {
+                    areaArray.push(area);
+                }
+            });
+
+            let target;
+            let targetArray = new Array();
+            $("#addTarget").click(function () {
+                target = $("#target").val();
+                if (!targetArray.includes(target)) {
+                    targetArray.push(target);
+                }
+            });
+        </script>
+
+        <script id="Add">
+
             $(document).ready(function () {
+
                 $("#add").click(function () {
                     nameAdd = $("#name").val();
                     value = $("#value").val();
                     idea = $("#idea").val();
-                    fins = $("#fins").val();
-                    goal = $("#goal").val();
-                    area = $("#area").val();
 
                     sqlAdd = "INSERT INTO `project`(`project_name`, `project_value`, `project_idea`) VALUES ('" + nameAdd + "','" + value + "','" + idea + "')";
                     $.ajax({
@@ -505,24 +762,56 @@
                         data: { sqlAdd: sqlAdd },
                         type: "post",
                         success: function (out) {
+
                             alert(out);
+                            if (out == "New record created successfully") {
+                                if (myArray.length > 0) {
+                                    for (i = 0; i < myArray.length; i++) {
+                                        let sql = "INSERT INTO `fin_pro`(`project_financier_name`, `project_name`) VALUES ('" + myArray[i] + "','" + nameAdd + "')";
+                                        add(sql);
+                                    }
+                                }
+
+                                if (goalArray.length > 0) {
+                                    for (i = 0; i < goalArray.length; i++) {
+                                        let sql = "INSERT INTO `goal_pro`(`goal_name`, `project_name`) VALUES ('" + goalArray[i] + "','" + nameAdd + "')";
+                                        add(sql);
+                                    }
+                                }
+
+                                if (areaArray.length > 0) {
+                                    for (i = 0; i < areaArray.length; i++) {
+                                        let sql = "INSERT INTO `pro_area`(`area_name`, `project_name`) VALUES ('" + areaArray[i] + "','" + nameAdd + "')";
+                                        add(sql);
+                                    }
+                                }
+
+                                if (targetArray.length > 0) {
+                                    for (i = 0; i < targetArray.length; i++) {
+                                        let sql = "INSERT INTO `targ_pro`(`target_group`, `project_name`) VALUES ('" + targetArray[i] + "','" + nameAdd + "')";
+                                        add(sql);
+                                    }
+                                }
+                            }
                         }
                     });
 
                     reload("SELECT * FROM `project`");
+
+
                 });
 
             });
         </script>
 
-        <script>
+        <script id="makeDisabeld">
             $("#add").prop("disabled", true);
 
             $("#add").css({
                 "cursor": "auto"
             });
 
-            $("button").hover(function () {
+            $("#info div div button,#add,#edit").hover(function () {
                 $(this).css({
                     "background-color": "#C58940",
                     "color": "white"
@@ -551,13 +840,49 @@
             });
 
         </script>
+
+        <script id="moreButton">
+            $("#moreFin").click(function () {
+                if ($("#sFin").css("display") == "none") {
+                    $("#sFin").css("display", "flex");
+                } else {
+                    $("#sFin").css("display", "none");
+                }
+            });
+
+            $("#moreGoal").click(function () {
+                if ($("#sGoal").css("display") == "none") {
+                    $("#sGoal").css("display", "flex");
+                } else {
+                    $("#sGoal").css("display", "none");
+                }
+            });
+
+            $("#moreArea").click(function () {
+                if ($("#sArea").css("display") == "none") {
+                    $("#sArea").css("display", "flex");
+                } else {
+                    $("#sArea").css("display", "none");
+                }
+            });
+
+            $("#moreTarget").click(function () {
+                if ($("#sTarget").css("display") == "none") {
+                    $("#sTarget").css("display", "flex");
+                } else {
+                    $("#sTarget").css("display", "none");
+                }
+            });
+        </script>
+
+
     </section>
 
     <section id="tableDis">
         <h2>جميع المشاريع</h2>
         <input type="text" name="name" placeholder="# البحث">
 
-        <script>
+        <script id="search">
             $(document).ready(function () {
                 $("#tableDis input").keyup(function () {
                     val = $(this).val();
@@ -571,36 +896,47 @@
             });
         </script>
 
-        <table class="table">
+        <table class="table" id="table">
 
         </table>
 
-        <script>
+        <script id="remove_edit">
             $(document).ready(function () {
                 sql = "SELECT * FROM `project`";
                 reload(sql);
 
             });
 
+            function deleteRow(sql) {
+                $.ajax({
+                    url: "phpFile/remove.php",
+                    data: { sql: sql },
+                    type: "post",
+                    success: function (out) {
+                    }
+                });
+            }
+
             $(document).on('click', '.remove-btn', function () {
                 id = $(this).data('id');
                 table = "project";
                 feild = "project_name";
                 sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
-                $.ajax({
-                    url: "phpFile/remove.php",
-                    data: { id: id, table: table, feild: feild },
-                    type: "post",
-                    success: function (out) {
-                        reload("SELECT * FROM `project`");
-                        alert(out);
-                    }
-                });
+                sql1 = "DELETE FROM `fin_pro` WHERE `" + feild + "` = '" + id + "'";
+                sql2 = "DELETE FROM `goal_pro` WHERE `" + feild + "` = '" + id + "'";
+                sql3 = "DELETE FROM `pro_area` WHERE `" + feild + "` = '" + id + "'";
+                sql4 = "DELETE FROM `targ_pro` WHERE `" + feild + "` = '" + id + "'";
+                deleteRow(sql);
+                deleteRow(sql1);
+                deleteRow(sql2);
+                deleteRow(sql3);
+                deleteRow(sql4);
+                reload("SELECT * FROM `project`");
             });
 
             $(document).on('click', '.edit-btn', function () {
                 id = $(this).data('id');
-                sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
+                sql = "SELECT * FROM `project` WHERE `project_name`='" + id + "'";
                 $.ajax({
                     url: "phpFile/show.php",
                     data: { sql: sql },
@@ -608,24 +944,103 @@
                     dataType: "json",
                     success: function (out) {
 
-                        name = out[0].username;
-                        password = out[0].password;
-                        pir = out[0].permission;
+                        name = out[0].project_name;
+                        project_value = out[0].project_value;
+                        project_idea = out[0].project_idea;
 
                         $("#name").val(name);
-                        $("#password").prop("type", "text");
-                        $("#password").val(password);
-                        $("#pir").val(pir);
+                        $("#value").val(project_value);
+                        $("#idea").val(project_idea);
 
                         setTimeout(function () {
-                            window.location.replace("users.html#hero");
+                            window.location.replace("projects.html#hero");
                         }, 400);
 
                         $("#add").toggle();
                         $("#edit").toggle();
+
+                        $("#part2 p").toggle();
+                        $("#info div div div select").css("margin-bottom", "12px");
+                        $("#edit").css("margin-top", "32px");
+
+                        finReload("SELECT `project_financier_name` FROM `fin_pro` WHERE `project_name`='" + id + "'");
+                        goalReload("SELECT `goal_name` FROM `goal_pro` WHERE `project_name`='" + id + "'");
+                        targetReload("SELECT `target_group` FROM `targ_pro` WHERE `project_name`='" + id + "'");
+                        areaReload("SELECT `area_name` FROM `pro_area` WHERE `project_name`='" + id + "'");
+
+                        $(".app").toggle();
+                        $(".dis").toggle();
+
+
                     }
                 });
             });
+
+        </script>
+
+        <script id="remove_foregn_key">
+
+            let finsD;
+            let myArrayD = new Array();
+            $("#reamoveFin").click(function () {
+                finsD = $("#fins").val();
+                if (!myArrayD.includes(finsD)) {
+                    myArrayD.push(finsD);
+                }
+            });
+
+            let goalD;
+            let goalArrayD = new Array();
+            $("#reamoveGoal").click(function () {
+                goalD = $("#goal").val();
+                if (!goalArrayD.includes(goalD)) {
+                    goalArrayD.push(goalD);
+                }
+            });
+
+            let areaD;
+            let areaArrayD = new Array();
+            $("#reamoveArea").click(function () {
+                areaD = $("#area").val();
+                if (!areaArrayD.includes(areaD)) {
+                    areaArrayD.push(areaD);
+                }
+            });
+
+            let targetD;
+            let targetArrayD = new Array();
+            $("#removeTarget").click(function () {
+                targetD = $("#target").val();
+                if (!targetArrayD.includes(targetD)) {
+                    targetArrayD.push(targetD);
+                }
+            });
+
+            $("#edit").click(function () {
+                nameAdd = $("#name").val();
+                value = $("#value").val();
+                idea = $("#idea").val();
+                sqlup = "UPDATE `project` SET `project_name`= '" + nameAdd + "', `project_value`='" + value + "',`project_idea`='" + idea + "' WHERE project_name = '" + id + "'";
+                $.ajax({
+                    url: "phpFile/update.php",
+                    data: { sqlup: sqlup },
+                    type: "post",
+                    success: function () {
+                        $("#name").val("");
+                        $("#value").val("");
+                        $("#idea").val("");
+
+                        $("#add").toggle();
+                        $("#edit").toggle();
+                        
+                        reload("SELECT * FROM `project`");
+                        setTimeout(function () {
+                            window.location.replace("projects.html#table");
+                        }, 400);
+                    }
+                });
+            });
+
         </script>
 
     </section>

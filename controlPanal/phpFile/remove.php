@@ -6,17 +6,13 @@ $dbname = "sfi";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+$conn -> set_charset("utf8");
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$id = trim($_POST["id"]);
-$table = trim($_POST["table"]);
-$feild = trim($_POST["feild"]);
-
-$sql = "DELETE FROM `".$table."` WHERE `".$feild."` = '".$id."'";
-
+$sql = $_POST["sql"];
 $conn->query($sql);
 
 if ($conn->query($sql) === TRUE) {

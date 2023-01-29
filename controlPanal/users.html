@@ -544,13 +544,13 @@
                 id = $(this).data('id');
                 table = "users";
                 feild = "username";
+                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
                 $.ajax({
                     url: "phpFile/remove.php",
-                    data: { id: id, table: table, feild: feild },
+                    data: { sql:sql },
                     type: "post",
                     success: function (out) {
                         reload("SELECT * FROM `users`");
-                        alert(out);
                     }
                 });
             });
