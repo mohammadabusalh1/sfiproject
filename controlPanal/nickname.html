@@ -9,7 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>المستخدمين</title>
+    <title>المسميات</title>
 </head>
 
 <style>
@@ -268,7 +268,7 @@
     }
 
     table {
-        width: 100%;
+        width: 30%;
     }
 
     table,
@@ -351,6 +351,10 @@
     #edit {
         display: none;
     }
+
+    .dis {
+        display: none;
+    }
 </style>
 
 <body dir="rtl">
@@ -363,9 +367,10 @@
                 dataType: "json",
                 type: "post",
                 success: function (data) {
-                    ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> <th>الحذف</th><th>النعديل</th></tr>";
+                    ht = "<tr> <th>اللقب</th> <th>حذف</th></tr>";
                     for (i = 0; i < data.length; i++) {
-                        ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td><button data-id=" + data[i].username + " class=\"remove-btn\">حذف</button></td> <td><button data-id=" + data[i].id + " class=\"edit-btn\">تعديل</button></td></tr>";
+                        ht += "<tr><td>" + data[i].nickname + "<td><button data-id=" + 
+                            data[i].nickname + " class=\"remove-btn\">حذف</button></td>";
                     }
                     $(".table").html(ht);
                 }
@@ -380,7 +385,7 @@
                 <h6>الرئيسية</h6>
             </a>
             <a href="users.html">
-                <h6 class="active">المستخدمين</h6>
+                <h6>المستخدمين</h6>
             </a>
             <a href="projects.html">
                 <h6>المشاريع</h6>
@@ -390,10 +395,10 @@
             </a>
             
             <a href="programs.html">
-                <h6>البرامج</h6>
+                <h6 >البرامج</h6>
             </a>
             <a href="nickname.html">
-                <h6>المسميات</h6>
+                <h6 class="active">المسميات</h6>
             </a>
         </div>
 
@@ -432,25 +437,16 @@
 
     <section id="hero">
         <div id="info">
-            <h6>إسم المستخدم</h6>
+            <h6>اللقب</h6>
             <input type="text" id="name">
-            <h6>كلمة المرور</h6>
-            <input type="password" id="password">
-            <select name="pir" id="pir">
-                <option value="admin">مشرف</option>
-                <option value="user">موظف</option>
-            </select>
             <button id="add" class="Darkbutton">أضف</button>
-            <button id="edit" class="Darkbutton">تعديل</button>
         </div>
 
         <script>
             $(document).ready(function () {
                 $("#add").click(function () {
                     nameAdd = $("#name").val();
-                    passAdd = $("#password").val();
-                    pirAdd = $("#pir").val();
-                    sqlAdd = "INSERT INTO users (`username`, `password`, `permission`) VALUES ('" + nameAdd + "','" + passAdd + "','" + pirAdd + "')";
+                    sqlAdd = "INSERT INTO `nicknames`(`nickname`) VALUES ('" + nameAdd + "')";
 
                     $.ajax({
                         url: "phpFile/add.php",
@@ -462,7 +458,7 @@
                     });
 
 
-                    sql = "SELECT * FROM `users`";
+                    sql = "SELECT * FROM `nicknames`";
                     reload(sql);
 
 
@@ -489,8 +485,8 @@
                 });
             });
 
-            $("#info input:nth-child(4),#info input:nth-child(2)").keyup(function () {
-                if ($("#info input:nth-child(2)").val() == "" || $("#info input:nth-child(4)").val() == "") {
+            $("#info input:nth-child(2)").keyup(function () {
+                if ($("#info input:nth-child(2)").val() == "") {
 
                     $("#info button").prop("disabled", true);
                     $("#info button").css({
@@ -509,7 +505,7 @@
     </section>
 
     <section id="tableDis">
-        <h2>جميع المستخدمين</h2>
+        <h2>جميع الألقاب</h2>
         <input type="text" name="name" placeholder="# البحث">
 
         <script>
@@ -517,9 +513,9 @@
                 $("#tableDis input").keyup(function () {
                     val = $(this).val();
                     if (val == "") {
-                        sql = "SELECT * FROM `users`";
+                        sql = "SELECT * FROM `nicknames`";
                     } else {
-                        sql = "SELECT * FROM `users` WHERE `permission` like '%" + val + "%' || `username` like '%" + val + "%' || `password` like '%" + val + "%'";
+                        sql = "SELECT * FROM `nicknames` WHERE `nickname` like '%" + val + "%'";
                     }
                     reload(sql);
                 });
@@ -532,78 +528,24 @@
 
         <script>
             $(document).ready(function () {
-                sql = "SELECT * FROM `users`";
+                sql = "SELECT * FROM `nicknames`";
                 reload(sql);
             });
 
             $(document).on('click', '.remove-btn', function () {
                 id = $(this).data('id');
-                table = "users";
-                feild = "username";
-                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+                sql = "DELETE FROM `nicknames` WHERE `nickname` = '" + id + "'";
                 $.ajax({
                     url: "phpFile/remove.php",
                     data: { sql:sql },
                     type: "post",
                     success: function (out) {
-                        reload("SELECT * FROM `users`");
+                        reload("SELECT * FROM `nicknames`");
                     }
                 });
+                
             });
 
-            let id;
-            $(document).on('click', '.edit-btn', function () {
-                id = $(this).data('id');
-                sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
-                $.ajax({
-                    url: "phpFile/show.php",
-                    data: { sql: sql },
-                    type: "post",
-                    dataType: "json",
-                    success: function (out) {
-
-                        name = out[0].username;
-                        password = out[0].password;
-                        pir = out[0].permission;
-
-                        $("#name").val(name);
-                        $("#password").prop("type", "text");
-                        $("#password").val(password);
-                        $("#pir").val(pir);
-                        
-                        setTimeout(function () {
-                            window.location.replace("users.html#hero");
-                        }, 400);
-
-                        $("#add").toggle();
-                        $("#edit").toggle();
-                    }
-                });
-            });
-
-            $("#edit").click(function () {
-                nameAdd = $("#name").val();
-                passAdd = $("#password").val();
-                pirAdd = $("#pir").val();
-                sqlup = "UPDATE `users` SET `username`='" + nameAdd + "',`password`='" + passAdd + "',`permission`='" + pirAdd + "' WHERE id = '" + id + "'";
-                $.ajax({
-                    url: "phpFile/update.php",
-                    data: { sqlup: sqlup },
-                    type: "post",
-                    success: function () {
-                        $("#name").val("");
-                        $("#password").prop("type", "password");
-                        $("#password").val("");
-
-                        $("#add").toggle();
-                        $("#edit").toggle();
-                        reload("SELECT * FROM `users`");
-                        setTimeout(function () {
-                            window.location.replace("users.html#table");
-                        }, 400);
-                    }
-                });
-            });
         </script>
 
     </section>

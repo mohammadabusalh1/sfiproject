@@ -431,7 +431,7 @@
                 dataType: "json",
                 type: "post",
                 success: function (data) {
-                    ht = "<tr> <th>أسم المشروع</th> <th>قيمة المشروع</th> <th>فكرة المشروع</th> <th> الحذف</th> <th> تعديل</th></tr>";
+                    ht = "<tr> <th>إسم المشروع</th> <th>قيمة المشروع</th> <th>فكرة المشروع</th> <th> الحذف</th> <th> تعديل</th></tr>";
                     for (i = 0; i < data.length; i++) {
                         ht += "<tr><td>" + data[i].project_name + "</td><td>" + data[i].project_value + "</td><td>" + data[i].project_idea + "</td> <td><button data-id=" + data[i].project_name + " class=\"remove-btn\">حذف</button></td> <td><button data-id=" + data[i].project_name + " class=\"edit-btn\">تعديل</button></td></tr>";
                     }
@@ -456,9 +456,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            <a href="activ.html">
-                <h6>الأنشطة</h6>
-            </a>
+            
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
@@ -487,9 +485,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            <a href="activ.html">
-                <h6>الأنشطة</h6>
-            </a>
+            
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
@@ -515,6 +511,7 @@
             </div>
 
             <div id="part2">
+
                 <div id="fin">
                     <h6> أسماء الممولين</h6>
                     <div>
@@ -544,10 +541,33 @@
                     </div>
                     <p id="moreFin">أضف المزيد؟</p>
                     <span class="more" id="sFin">
-                        <input type="text" name="mFin" id="mFin" placeholder="إسم الممول">
-                        <button id="addMoreFin" class="Darkbutton ">أضف</button>
+                        <input type="text" name="mFin" class="app" id="mFin" placeholder="إسم الممول">
+                        <button id="addMoreFin" class="Darkbutton app">أضف</button>
+                        <select name="fins2" id="fins2" class="dis">
+                            <script>
+                                function finReload2(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].project_financier_name + "\">" + data[i].project_financier_name + "</option>";
+                                            }
+                                            $("#fins2").html(ht);
+                                        }
+                                    });
+                                }
+
+                                finReload2("SELECT * FROM `financier`");
+                            </script>
+                        </select>
+                        <button id="addMoreFin2" class="Darkbutton dis">أضف</button>
                     </span>
                 </div>
+
                 <div id="goals">
                     <h6>الأهداف</h6>
                     <div>
@@ -577,10 +597,33 @@
                     </div>
                     <p id="moreGoal">أضف المزيد؟</p>
                     <span class="more" id="sGoal">
-                        <input type="text" name="mgoal" id="mgoal" placeholder="الهدف">
-                        <button id="addMoreGoal" class="Darkbutton ">أضف</button>
+                        <input type="text" name="mgoal" id="mgoal" class="app" placeholder="الهدف">
+                        <button id="addMoreGoal" class="Darkbutton app">أضف</button>
+                        <select name="goal" id="goal2" class="dis">
+                            <script>
+                                function goalReload2(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].goal_name + "\">" + data[i].goal_name + "</option>";
+                                            }
+                                            $("#goal2").html(ht);
+                                        }
+                                    });
+                                }
+
+                                goalReload2("SELECT * FROM `goals`");
+                            </script>
+                        </select>
+                        <button id="addMoreGoal2" class="Darkbutton dis">أضف</button>
                     </span>
                 </div>
+
                 <div id="areas">
                     <h6>المناطق المستهدفة</h6>
                     <div>
@@ -609,10 +652,32 @@
                     </div>
                     <p id="moreArea">أضف المزيد؟</p>
                     <span class="more" id="sArea">
-                        <input type="text" name="mArea" id="mArea" placeholder="إسم المنطقة">
-                        <button id="addMoreArea" class="Darkbutton ">أضف</button>
+                        <input type="text" name="mArea" id="mArea" class="app" placeholder="إسم المنطقة">
+                        <button id="addMoreArea" class="Darkbutton app">أضف</button>
+                        <select name="area" id="area2" class="dis">
+                            <script>
+                                function areaReload2(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].area_name + "\">" + data[i].area_name + "</option>";
+                                            }
+                                            $("#area2").html(ht);
+                                        }
+                                    });
+                                }
+                                areaReload2("SELECT * FROM `area`");
+                            </script>
+                        </select>
+                        <button id="addMoreArea2" class="Darkbutton dis">أضف</button>
                     </span>
                 </div>
+
                 <div id="targets">
                     <h6>الفئات المستهدفة</h6>
                     <div>
@@ -641,10 +706,32 @@
                     </div>
                     <p id="moreTarget">أضف المزيد؟</p>
                     <span class="more" id="sTarget">
-                        <input type="text" name="mTarget" id="mTarget" placeholder="إسم الفئة">
-                        <button id="addMoreTarget" class="Darkbutton">أضف</button>
+                        <input type="text" name="mTarget" id="mTarget" class="app" placeholder="إسم الفئة">
+                        <button id="addMoreTarget" class="Darkbutton app">أضف</button>
+                        <select name="target" id="target2" class="dis">
+                            <script>
+                                function targetReload2(sql) {
+                                    $.ajax({
+                                        url: "phpFile/show.php",
+                                        data: { sql: sql },
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            ht = "";
+                                            for (i = 0; i < data.length; i++) {
+                                                ht += "<option value=\"" + data[i].target_group + "\">" + data[i].target_group + "</option>";
+                                            }
+                                            $("#target2").html(ht);
+                                        }
+                                    });
+                                }
+                                targetReload2("SELECT * FROM `target_groups`");
+                            </script>
+                        </select>
+                        <button id="addMoreTarget2" class="Darkbutton dis">أضف</button>
                     </span>
                 </div>
+
                 <button id="add" class="Darkbutton">أضف</button>
                 <button id="edit" class="Darkbutton">تعديل</button>
             </div>
@@ -671,7 +758,7 @@
                     add(sql);
                     finReload("SELECT * FROM `financier`");
                 } else {
-                    alert("value empty")
+                    alert("القيمة فارغة")
                 }
             });
 
@@ -682,7 +769,7 @@
                     add(sql);
                     goalReload("SELECT * FROM `goals`");
                 } else {
-                    alert("value empty")
+                    alert("القيمة فارغة")
                 }
             });
 
@@ -693,7 +780,7 @@
                     add(sql);
                     areaReload("SELECT * FROM `area`");
                 } else {
-                    alert("value empty")
+                    alert("القيمة فارغة")
                 }
             });
 
@@ -704,7 +791,7 @@
                     add(sql);
                     targetReload("SELECT * FROM `target_groups`");
                 } else {
-                    alert("value empty")
+                    alert("القيمة فارغة")
                 }
             });
         </script>
@@ -959,8 +1046,8 @@
                         $("#add").toggle();
                         $("#edit").toggle();
 
-                        $("#part2 p").toggle();
-                        $("#info div div div select").css("margin-bottom", "12px");
+                        $("#tableDis").toggle();
+
                         $("#edit").css("margin-top", "32px");
 
                         finReload("SELECT `project_financier_name` FROM `fin_pro` WHERE `project_name`='" + id + "'");
@@ -970,6 +1057,102 @@
 
                         $(".app").toggle();
                         $(".dis").toggle();
+
+                        $("#addMoreFin2").click(function () {
+
+                            mFin = $("#fins2").val();
+                            if (mFin != "") {
+                                if (!($('#fins option[value="' + mFin + '"]').length > 0)) {
+                                    sql = "INSERT INTO `fin_pro` (`project_financier_name`, `project_name`) VALUES ('" + mFin + "','" + id + "')";
+                                    $.ajax({
+                                        url: "phpFile/add.php",
+                                        data: { sqlAdd: sql },
+                                        type: "post",
+                                        success: function (out) {
+                                            alert(out);
+                                            finReload("SELECT `project_financier_name` FROM `fin_pro` WHERE `project_name`='" + id + "'");
+                                        }
+                                    });
+                                } else {
+                                    alert("العنصر موجود");
+                                }
+                            } else {
+                                alert("القيمة فارغة");
+                            }
+                        });
+
+                        $("#addMoreGoal2").click(function () {
+                            mgoal = $("#goal2").val();
+                            if (mgoal != "") {
+                                if (!($('#goal option[value="' + mgoal + '"]').length > 0)) {
+                                    sql1 = "INSERT INTO `goal_pro` (`goal_name`, `project_name`) VALUES ('" + mgoal + "','" + id + "')";
+                                    $.ajax({
+                                        url: "phpFile/add.php",
+                                        data: { sqlAdd: sql1 },
+                                        type: "post",
+                                        success: function (out) {
+                                            alert(out);
+                                            goalReload("SELECT `goal_name` FROM `goal_pro` WHERE `project_name`='" + id + "'");
+                                        }
+                                    });
+                                } else {
+                                    alert("العنصر موجود");
+                                }
+
+                            } else {
+                                alert("القيمة فارغة");
+                            }
+                        });
+
+                        $("#addMoreArea2").click(function () {
+                            mArea = $("#area2").val();
+                            if (mArea != "") {
+
+                                if (!($('#area option[value="' + mArea + '"]').length > 0)) {
+                                    sql2 = "INSERT INTO `pro_area` (`area_name`, `project_name`) VALUES ('" + mArea + "','" + id + "')";
+                                    $.ajax({
+                                        url: "phpFile/add.php",
+                                        data: { sqlAdd: sql2 },
+                                        type: "post",
+                                        success: function (out) {
+                                            alert(out);
+                                            areaReload("SELECT `area_name` FROM `pro_area` WHERE `project_name`='" + id + "'");
+                                        }
+                                    });
+                                } else {
+                                    alert("العنصر موجود");
+                                }
+
+                            } else {
+                                alert("القيمة فارغة");
+                            }
+                        });
+
+                        $("#addMoreTarget2").click(function () {
+                            mTarget = $("#target2").val();
+                            if (mTarget != "") {
+
+                                if (!($('#target option[value="' + mTarget + '"]').length > 0)) {
+
+                                    sql3 = "INSERT INTO `targ_pro` (`target_group`, `project_name`) VALUES ('" + mTarget + "','" + id + "')";
+                                    $.ajax({
+                                        url: "phpFile/add.php",
+                                        data: { sqlAdd: sql3 },
+                                        type: "post",
+                                        success: function (out) {
+                                            alert(out);
+                                            targetReload("SELECT  `target_group` FROM `targ_pro` WHERE `project_name`='" + id + "'");
+                                        }
+                                    });
+
+                                } else {
+                                    alert("العنصر موجود");
+                                }
+
+                            } else {
+                                alert("القيمة فارغة");
+                            }
+                        });
 
 
                     }
@@ -981,39 +1164,35 @@
         <script id="remove_foregn_key">
 
             let finsD;
-            let myArrayD = new Array();
             $("#reamoveFin").click(function () {
                 finsD = $("#fins").val();
-                if (!myArrayD.includes(finsD)) {
-                    myArrayD.push(finsD);
-                }
+                sql = "DELETE FROM `fin_pro` WHERE `project_financier_name` = '" + finsD + "' && `project_name`='" + id + "'";
+                deleteRow(sql);
+                finReload("SELECT `project_financier_name` FROM `fin_pro` WHERE `project_name`='" + id + "'");
             });
 
             let goalD;
-            let goalArrayD = new Array();
             $("#reamoveGoal").click(function () {
                 goalD = $("#goal").val();
-                if (!goalArrayD.includes(goalD)) {
-                    goalArrayD.push(goalD);
-                }
+                sql1 = "DELETE FROM `goal_pro` WHERE `goal_name` = '" + goalD + "' && `project_name`='" + id + "'";
+                deleteRow(sql1);
+                goalReload("SELECT `goal_name` FROM `goal_pro` WHERE `project_name`='" + id + "'");
             });
 
             let areaD;
-            let areaArrayD = new Array();
             $("#reamoveArea").click(function () {
                 areaD = $("#area").val();
-                if (!areaArrayD.includes(areaD)) {
-                    areaArrayD.push(areaD);
-                }
+                sql2 = "DELETE FROM `pro_area` WHERE `area_name` = '" + areaD + "' && `project_name`='" + id + "'";
+                deleteRow(sql2);
+                areaReload("SELECT `area_name` FROM `pro_area` WHERE `project_name`='" + id + "'");
             });
 
             let targetD;
-            let targetArrayD = new Array();
             $("#removeTarget").click(function () {
                 targetD = $("#target").val();
-                if (!targetArrayD.includes(targetD)) {
-                    targetArrayD.push(targetD);
-                }
+                sql3 = "DELETE FROM `targ_pro` WHERE `target_group` = '" + targetD + "' && `project_name`='" + id + "'";
+                deleteRow(sql3);
+                targetReload("SELECT `target_group` FROM `targ_pro` WHERE `project_name`='" + id + "'");
             });
 
             $("#edit").click(function () {
@@ -1032,7 +1211,16 @@
 
                         $("#add").toggle();
                         $("#edit").toggle();
-                        
+
+                        $(".app").toggle();
+                        $(".dis").toggle();
+                        $("#tableDis").toggle();
+
+                        targetReload("SELECT * FROM `target_groups`");
+                        areaReload("SELECT * FROM `area`");
+                        goalReload("SELECT * FROM `goals`");
+                        finReload("SELECT * FROM `financier`");
+
                         reload("SELECT * FROM `project`");
                         setTimeout(function () {
                             window.location.replace("projects.html#table");
@@ -1065,9 +1253,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            <a href="activ.html">
-                <h6>الأنشطة</h6>
-            </a>
+            
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
