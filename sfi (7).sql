@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 26 يناير 2023 الساعة 19:26
+-- Generation Time: 31 يناير 2023 الساعة 17:01
 -- إصدار الخادم: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -109,6 +109,15 @@ CREATE TABLE IF NOT EXISTS `area` (
   PRIMARY KEY (`area_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- إرجاع أو استيراد بيانات الجدول `area`
+--
+
+INSERT INTO `area` (`area_name`) VALUES
+('الخليل'),
+('بيت لحم'),
+('صوريف');
+
 -- --------------------------------------------------------
 
 --
@@ -168,22 +177,65 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- --------------------------------------------------------
 
 --
+-- بنية الجدول `financier`
+--
+
+DROP TABLE IF EXISTS `financier`;
+CREATE TABLE IF NOT EXISTS `financier` (
+  `project_financier_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`project_financier_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `financier`
+--
+
+INSERT INTO `financier` (`project_financier_name`) VALUES
+('Ahmad'),
+('Ali'),
+('mohammad'),
+('Mohmmad');
+
+-- --------------------------------------------------------
+
+--
+-- بنية الجدول `fin_pro`
+--
+
+DROP TABLE IF EXISTS `fin_pro`;
+CREATE TABLE IF NOT EXISTS `fin_pro` (
+  `project_financier_name` varchar(50) NOT NULL,
+  `project_name` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `fin_pro`
+--
+
+INSERT INTO `fin_pro` (`project_financier_name`, `project_name`) VALUES
+('Ali', 'a1'),
+('Ahmad', 'a1'),
+('Mohmmad', 'a1');
+
+-- --------------------------------------------------------
+
+--
 -- بنية الجدول `goals`
 --
 
 DROP TABLE IF EXISTS `goals`;
 CREATE TABLE IF NOT EXISTS `goals` (
-  `goal` varchar(25) NOT NULL,
-  `goal_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`goal_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `goal_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`goal_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- إرجاع أو استيراد بيانات الجدول `goals`
 --
 
-INSERT INTO `goals` (`goal`, `goal_id`) VALUES
-('aim1', 1);
+INSERT INTO `goals` (`goal_name`) VALUES
+('aim1'),
+('aim2');
 
 -- --------------------------------------------------------
 
@@ -193,11 +245,17 @@ INSERT INTO `goals` (`goal`, `goal_id`) VALUES
 
 DROP TABLE IF EXISTS `goal_pro`;
 CREATE TABLE IF NOT EXISTS `goal_pro` (
-  `goal_id` int(11) NOT NULL,
   `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
-  KEY `goal_id` (`goal_id`),
+  `goal_name` varchar(25) NOT NULL,
   KEY `project_name` (`project_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `goal_pro`
+--
+
+INSERT INTO `goal_pro` (`project_name`, `goal_name`) VALUES
+('a1', 'aim1');
 
 -- --------------------------------------------------------
 
@@ -227,6 +285,14 @@ CREATE TABLE IF NOT EXISTS `nicknames` (
   PRIMARY KEY (`nickname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- إرجاع أو استيراد بيانات الجدول `nicknames`
+--
+
+INSERT INTO `nicknames` (`nickname`) VALUES
+('لقب2'),
+('لقب3');
+
 -- --------------------------------------------------------
 
 --
@@ -241,6 +307,14 @@ CREATE TABLE IF NOT EXISTS `participants` (
   KEY `nickname` (`nickname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- إرجاع أو استيراد بيانات الجدول `participants`
+--
+
+INSERT INTO `participants` (`participants_name`, `nickname`) VALUES
+('a6', 'لقب1'),
+('احمد', 'لقب1');
+
 -- --------------------------------------------------------
 
 --
@@ -249,9 +323,17 @@ CREATE TABLE IF NOT EXISTS `participants` (
 
 DROP TABLE IF EXISTS `programs`;
 CREATE TABLE IF NOT EXISTS `programs` (
-  `program_name` varchar(50) NOT NULL,
+  `program_name` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`program_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `programs`
+--
+
+INSERT INTO `programs` (`program_name`) VALUES
+('a1'),
+('برنامج1');
 
 -- --------------------------------------------------------
 
@@ -262,12 +344,17 @@ CREATE TABLE IF NOT EXISTS `programs` (
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE IF NOT EXISTS `project` (
   `project_name` varchar(50) NOT NULL,
-  `project_financier_first_name` varchar(50) NOT NULL,
-  `project_financier_last_name` varchar(50) NOT NULL,
   `project_value` float NOT NULL,
   `project_idea` text NOT NULL,
   PRIMARY KEY (`project_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `project`
+--
+
+INSERT INTO `project` (`project_name`, `project_value`, `project_idea`) VALUES
+('a1', 34, 'dsfsdf');
 
 -- --------------------------------------------------------
 
@@ -283,6 +370,13 @@ CREATE TABLE IF NOT EXISTS `pro_area` (
   KEY `project_name` (`project_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- إرجاع أو استيراد بيانات الجدول `pro_area`
+--
+
+INSERT INTO `pro_area` (`area_name`, `project_name`) VALUES
+('صوريف', 'a1');
+
 -- --------------------------------------------------------
 
 --
@@ -294,6 +388,17 @@ CREATE TABLE IF NOT EXISTS `target_groups` (
   `target_group` varchar(50) CHARACTER SET utf8 COLLATE utf8_german2_ci NOT NULL,
   PRIMARY KEY (`target_group`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `target_groups`
+--
+
+INSERT INTO `target_groups` (`target_group`) VALUES
+('الشباب'),
+('صغار السن'),
+('صغار السن 13'),
+('صغار السن 14'),
+('كبار السن');
 
 -- --------------------------------------------------------
 
@@ -309,6 +414,13 @@ CREATE TABLE IF NOT EXISTS `targ_pro` (
   KEY `project_name` (`project_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- إرجاع أو استيراد بيانات الجدول `targ_pro`
+--
+
+INSERT INTO `targ_pro` (`target_group`, `project_name`) VALUES
+('الشباب', 'a1');
+
 -- --------------------------------------------------------
 
 --
@@ -323,17 +435,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `permission` varchar(15) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 --
 -- إرجاع أو استيراد بيانات الجدول `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `permission`) VALUES
-(37, 'mohammad', '1234', 'admin'),
-(36, 'a', 'a', 'admin'),
-(35, 'qaz', ' qaz1', 'as'),
-(38, 'd', 'd', 'user');
+(48, 'a', 'a', 'admin');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
