@@ -9,6 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="smallLogo.png" />
     <title>المسميات</title>
 </head>
 
@@ -367,7 +368,7 @@
                 dataType: "json",
                 type: "post",
                 success: function (data) {
-                    ht = "<tr> <th>اللقب</th> <th>حذف</th></tr>";
+                    ht = "<tr> <th>المسمى</th> <th>حذف</th></tr>";
                     for (i = 0; i < data.length; i++) {
                         ht += "<tr><td>" + data[i].nickname + "<td><button data-id=" + 
                             data[i].nickname + " class=\"remove-btn\">حذف</button></td>";
@@ -380,7 +381,7 @@
 
     <section id="nav">
         <div id="links">
-            <img src="C:\wamp64\www\sfiProject\img\logo.png" alt="...">
+            <img src="img\logo.png" alt="...">
             <a href="Home.html">
                 <h6>الرئيسية</h6>
             </a>
@@ -437,7 +438,7 @@
 
     <section id="hero">
         <div id="info">
-            <h6>اللقب</h6>
+            <h6>المسمى</h6>
             <input type="text" id="name">
             <button id="add" class="Darkbutton">أضف</button>
         </div>
@@ -505,7 +506,7 @@
     </section>
 
     <section id="tableDis">
-        <h2>جميع الألقاب</h2>
+        <h2>جميع المسميات</h2>
         <input type="text" name="name" placeholder="# البحث">
 
         <script>
@@ -553,7 +554,7 @@
     <footer>
 
         <div id="logo">
-            <img src="C:\wamp64\www\sfiProject\img\logo.png" alt="...">
+            <img src="img\logo.png" alt="...">
             <p>فلسطين، بيت لحم، شارع القدس الخليل - نزلة غزال - بالقرب من فرشات حرباوي
         </div>
 

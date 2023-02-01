@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="smallLogo.png" />
+    <title>تسجيل الدخول</title>
+</head>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: 300;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    h2 {
+        font-size: 46px;
+    }
+
+    h3 {
+        font-size: 36px;
+    }
+
+    h4 {
+        font-size: 26px;
+    }
+
+    h6 {
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .Darkbutton {
+        padding: 8px 25px;
+        border: 1px solid #C58940;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 16px;
+        transition: 0.7s;
+    }
+
+    button {
+        background-color: #C58940;
+        /* Sets the background color of the button to blue */
+        color: black;
+        /* Sets the text color of the button to white */
+        padding: 5px 10px;
+        /* Adds padding to the button */
+        border-radius: 5px;
+        /* Rounds the corners of the button */
+        border: none;
+        /* Removes the border from the button */
+        cursor: pointer;
+        /* Changes the cursor to a pointer when hovering over the button */
+        font-size: 16px;
+        /* Sets the font size of the button text */
+        margin-top: 24px;
+        transition: 0.4s;
+        color: hsl(47, 47%, 96%, 0.8);
+        width: 96.5%;
+        font-weight: 100;
+    }
+
+    button:hover {
+        background-color: #C58940;
+        color: #FAF8F1;
+    }
+
+    #log {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000000;
+    }
+
+    #info {
+        padding: 40px 60px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 30%;
+        border: 1px solid hsl(33, 53%, 51%, 0.7);
+        background-color: #FAF8F1;
+        box-shadow: 20px 25px 25px rgb(0, 0, 0, 0.05);
+        z-index: 10;
+        position: relative;
+        left: 6%;
+        top: 9%;
+    }
+
+    #info h2 {
+        padding-bottom: 25px;
+        font-weight: 400;
+        font-size: 40px;
+        color: hsl(0, 0%, 0%, 0.7);
+    }
+
+    #info #name,
+    #pass {
+        width: 100%;
+    }
+
+    #info div h4 {
+        padding-bottom: 4px;
+        font-size: 20px;
+        color: hsl(0, 0%, 0%, 0.65);
+    }
+
+    #name input,
+    #pass input {
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid hsl(33, 53%, 51%, 0.6);
+        box-shadow: 5px 10px 15px rgb(0, 0, 0, 0.03);
+        width: 90%;
+    }
+
+    .pirm {
+        padding: 4px 12px;
+        border-radius: 8px;
+        border: 1px solid hsl(33, 53%, 51%, 0.5);
+        margin: 4px 0px;
+        width: 90%;
+        color: hsl(0, 0%, 0%, 0.8);
+    }
+
+    label {
+        padding-right: 12px;
+        font-size: 20px;
+        font-weight: 100;
+        color: hsl(0, 0%, 0%, 0.7);
+    }
+
+
+    #cir1 {
+        width: 55vh;
+        height: 55vh;
+        background-color: #C58940;
+        border-radius: 50%;
+        z-index: 5;
+        box-shadow: 20px 25px 25px rgb(0, 0, 0, 0.05);
+        position: relative;
+        left: -8%;
+        top: -20%;
+
+    }
+
+    #cir2 {
+        width: 35vh;
+        height: 35vh;
+        background-color: #E5BA73;
+        border-radius: 50%;
+        z-index: 7;
+        box-shadow: 20px 25px 25px rgb(0, 0, 0, 0.05);
+        position: relative;
+        left: -12%;
+        top: -8%;
+    }
+
+    @media screen and (max-width: 992px) {
+        #cir1 {
+            width: 42vh;
+            height: 42vh;
+        }
+
+        #cir2 {
+            width: 22vh;
+            height: 22vh;
+        }
+
+        #info {
+            width: 35%;
+        }
+    }
+
+    @media screen and (max-width: 792px) {
+        #cir1 {
+            display: none;
+        }
+
+        #cir2 {
+            display: none;
+        }
+
+        #info {
+            width: 50%;
+            position: static;
+
+        }
+    }
+
+    @media screen and (max-width: 392px) {
+
+        #info {
+            width: 70%;
+            padding: 40px 32px;
+        }
+    }
+</style>
+
+<body dir="rtl">
+
+    <form>
+        <section id="log">
+            <div id="cir2"></div>
+            <div id="cir1"></div>
+
+            <div id="info">
+                <h2>تسجيل الدخول</h2>
+                <div id="name">
+                    <h4>إسم المستخدم</h4>
+                    <input type="text">
+                </div>
+                <div id="pass">
+                    <h4>كلمة المرور</h4>
+                    <input type="password">
+                </div>
+                <div class="pirm"><input type="radio" name="pir" id="pir" value="admin" checked><label
+                        for="">مدير</label></div>
+                <div class="pirm"><input type="radio" name="pir" id="pir" value="user"><label for="">موظف</label></div>
+                <button class="Darkbutton" id="login">تسجيل الدخول</button>
+            </div>
+        </section>
+    </form>
+
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>
