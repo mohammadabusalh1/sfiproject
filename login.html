@@ -230,11 +230,11 @@
                 <h2>تسجيل الدخول</h2>
                 <div id="name">
                     <h4>إسم المستخدم</h4>
-                    <input type="text">
+                    <input type="text" id="nameIn">
                 </div>
                 <div id="pass">
                     <h4>كلمة المرور</h4>
-                    <input type="password">
+                    <input type="password" id="password">
                 </div>
                 <div class="pirm"><input type="radio" name="pir" id="pir" value="admin" checked><label
                         for="">مدير</label></div>
@@ -246,6 +246,30 @@
 
 
     <script>
+
+        $("#login").click(function(){
+            name = $("#nameIn").val();
+            pass = $("#password").val();
+            pir = $("#pir").val();
+            sql = "SELECT * FROM `users` WHERE `username`='"+name+"' && `password`='"+pass+"' && `permission`='"+pir+"'";
+            $.ajax({
+                url: "controlPanal/phpFile/show.php",
+                data: { sql: sql },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                 if(data.length>0){
+                    if(pir == "admin"){
+                        window.location.replace("controlPanal/Home.html");
+                    }else if(pir == "user"){
+
+                    }
+                 }else{
+                    alert("المسنخدم غير موجود");
+                 }
+                }
+            });
+        });
 
     </script>
 

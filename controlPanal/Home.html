@@ -310,7 +310,7 @@
 
         <div id="ic">
             <i class="fa fa-list-ul" aria-hidden="true"></i>
-            <button><span class="material-symbols-outlined"> logout </span></button>
+            <button id="logoutButt"><span class="material-symbols-outlined"> logout </span></button>
         </div>
     </section>
 
@@ -336,7 +336,7 @@
                 <h6>المسميات</h6>
             </a>
         </div>
-        <a href="#">
+        <a href="/sfiProject/login.html">
             <h6> تسجيل الخروج</h6>
         </a>
     </section>
@@ -414,7 +414,7 @@
             });
 
             $("#nav button span").click(function () {
-                window.location.replace("login.html");
+                window.location.href = '/sfiProject/login.html';
             });
 
             $(".card:nth-child(1)").click(function () {
