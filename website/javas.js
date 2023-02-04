@@ -94,23 +94,44 @@ $(document).ready(function () {
         area = $("#area").val();
         type = $("#type").val();
         det = $("#det").val();
-        $("#he1").toggle();
-        $("#he2").toggle();
 
         sqlAdd = "INSERT INTO `activities`(`activity_name`, `activity_date`, `activity_Governorate`, `activity_area`, `activity_type`, `activity_details`, `program_name`, `project_name`) VALUES " +
             "('" + name1 + "','" + date + "','" + gov + "','" + area + "','" + type + "','" + det + "','" + prog + "','" + pro + "')";
-        add(sqlAdd);
+
+        $.ajax({
+            url: "../controlPanal/phpFile/add.php",
+            data: { sqlAdd: sqlAdd },
+            type: "post",
+            success: function (out) {
+                if (out == "successfully") {
+                    $("#he1").toggle();
+                    $("#he2").toggle();
+                } else {
+                    alert(out);
+                }
+            }
+        });
 
 
         $("#bt_parti").click(function () {
             partName = $("#partName").val();
-            nick = $("#nick").val();
 
             sqlAdd2 = "INSERT INTO `act_part`(`participant_name`, `activity_name`) VALUES " +
                 "('" + partName + "','" + name1 + "')";
-            add(sqlAdd2);
 
-            alert("تمت الاضافة");
+            $.ajax({
+                url: "../controlPanal/phpFile/add.php",
+                data: { sqlAdd: sqlAdd2 },
+                type: "post",
+                success: function (out) {
+                    if (out == "successfully") {
+                        partName = $("#partName").val("");
+                        alert("تمت الاضافة");
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
 
         });
 
@@ -122,24 +143,41 @@ $(document).ready(function () {
 
                 empName = $("#empName").val();
                 sqlAddempName = "INSERT INTO `employees`(`emp_name`) VALUES ('" + empName + "')";
-                add(sqlAddempName);
-    
-                sqlMax = "SELECT MAX(`emp_id`) as idMax FROM `employees`";
+
+
                 $.ajax({
-                    url:"../controlPanal/phpFile/show.php",
-                    type:"post",
-                    dataType: "json",
-                    data:{sql:sqlMax},
-                    success:function(output){
-                      empMax = output[0].idMax;
+                    url: "../controlPanal/phpFile/add.php",
+                    data: { sqlAdd: sqlAddempName },
+                    type: "post",
+                    success: function (out) {
+
+                        sqlMax = "SELECT MAX(`emp_id`) as idMax FROM `employees`";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/show.php",
+                            type: "post",
+                            dataType: "json",
+                            data: { sql: sqlMax },
+                            success: function (output) {
+                                empMax = output[0].idMax;
+
+                                addEmpAct = "INSERT INTO `act_emp`(`emp_id`, `activity_name`) VALUES ('" + empMax + "','" + name1 + "')";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/add.php",
+                                    data: { sqlAdd: addEmpAct },
+                                    type: "post",
+                                    success: function (out) {
+                                        empName = $("#empName").val("");
+                                        alert("تمت الاضافة")
+                                    }
+                                });
+
+                            }
+                        });
+
                     }
                 });
-    
-    
-                addEmpAct = "INSERT INTO `act_emp`(`emp_id`, `activity_name`) VALUES ('"+empMax+"','"+name1+"')";
-                add(addEmpAct);
-    
-    
+
+
             });
 
             $("#bt_bbniName").click(function () {
@@ -149,12 +187,35 @@ $(document).ready(function () {
 
                 sqlAdd6 = "INSERT INTO `beneficiaries`(`beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
                     " ('" + bini + "','" + biniAge + "','" + biniSex + "')";
-                add(sqlAdd6);
 
-                sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`) VALUES" +
-                    " ('" + name1 + "','" + bini + "')";
-                add(sqlAdd7);
-                alert("تمت الاضافة");
+
+                $.ajax({
+                    url: "../controlPanal/phpFile/add.php",
+                    data: { sqlAdd: sqlAdd6 },
+                    type: "post",
+                    success: function (out) {
+
+                        if (out == "successfully") {
+                        } else {
+                            alert(out);
+                        }
+
+                        sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`) VALUES" +
+                            " ('" + name1 + "','" + bini + "')";
+
+                        $.ajax({
+                            url: "../controlPanal/phpFile/add.php",
+                            data: { sqlAdd: sqlAdd7 },
+                            type: "post",
+                            success: function (out) {
+                                bini = $("#bini").val("");
+                                biniAge = $("#biniAge").val("");
+                                biniSex = $("#biniSex").val("");
+                                alert("تمت الاضافة");
+                            }
+                        });
+                    }
+                });
             });
 
             $("#next3").click(function () {
@@ -166,67 +227,148 @@ $(document).ready(function () {
 
                     sqlAdd8 = "INSERT INTO `links`(`link`, `activity_name`) VALUES" +
                         " ('" + links + "','" + name1 + "')";
-                    add(sqlAdd8);
-                    alert("تمت الاضافة");
+
+                    $.ajax({
+                        url: "../controlPanal/phpFile/add.php",
+                        data: { sqlAdd: sqlAdd8 },
+                        type: "post",
+                        success: function (out) {
+                            if (out == "successfully") {
+                                links = $("#links").val("");
+                                alert("تمت الاضافة");
+                            } else {
+                                alert(out);
+                            }
+                        }
+                    });
                 });
 
                 $("#bt_att").click(function () {
 
                     var pic = $("#file").prop('files')[0];
-                    add("INSERT INTO `attachments`(`attachment`, `activity_name`) VALUES ('" + pic + "','"+nam1+"')");
-                    alert("تمت الاضافة");
+                    pisSql = "INSERT INTO `attachments`(`attachment`, `activity_name`) VALUES ('" + pic + "','" + name1 + "')";
+                    $.ajax({
+                        url: "../controlPanal/phpFile/add.php",
+                        data: { sqlAdd: pisSql },
+                        type: "post",
+                        success: function (out) {
+                            if (out == "successfully") {
+                                alert("تمت الاضافة");
+                            } else {
+                                alert(out);
+                            }
+                        }
+                    });
+                });
+            });
+
+            $("#bt_chall").click(function () {
+                chall = $("#chall").val();
+                alert(chall);
+
+                sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES ('"+chall+"')";
+
+
+                $.ajax({
+                    url: "../controlPanal/phpFile/add.php",
+                    data: { sqlAdd: sqlAdd9 },
+                    type: "post",
+                    success: function (out) {
+                        alert(out);
+                        sqlMax = "SELECT MAX(`challenge_id`) AS ms FROM `challenges`";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/show.php",
+                            type: "post",
+                            dataType: "json",
+                            data: { sql: sqlMax },
+                            success: function (output) {
+                                challMax = output[0].ms;
+
+                                addChallAct = "INSERT INTO `activ_chall`(`challenge_id`, `activity_name`) VALUES ('" + challMax + "','" + name1 + "')";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/add.php",
+                                    data: { sqlAdd: addChallAct },
+                                    type: "post",
+                                    success: function (out) {
+                                        if (out == "successfully") {
+                                            alert("تمت الاضافة");
+                                            chall = $("#chall").val("");
+                                        } else {
+                                            alert(out);
+                                        }
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
                 });
 
-                $("#bt_chall").click(function () {
-                    chall = $("#chall").val();
+            });
 
-                    sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES" +
-                        " ('" + chall + "')";
-                    add(sqlAdd9);
+            $("#next4").click(function () {
+                $("#he4").toggle();
+                $("#he1").toggle();
 
-                    show("SELECT `challenge_id` FROM `challenges` WHERE `challenge`='" + chall + "'");
-
-                    sqlAdd10 = "INSERT INTO `activ_chall`(`challenge_id`, `activity_name`) VALUES" +
-                        " ('" + empId + "','" + name1 + "')";
-                    add(sqlAdd10);
-                    alert("تمت الاضافة");
-
-                });
-
-                $("#next4").click(function () {
-                    $("#he4").toggle();
-                    $("#he1").toggle();
-                });
-
+                name1 = $("#name").val("");
+                pro = $("#pro").val("");
+                prog = $("#prog").val("");
+                date = $("#date").val("");
+                gov = $("#gov").val("");
+                area = $("#area").val("");
+                type = $("#type").val("");
+                det = $("#det").val("");
+                chall = $("#chall").val("");
+                links = $("#links").val("");
+                bini = $("#bini").val("");
+                biniAge = $("#biniAge").val("");
+                biniSex = $("#biniSex").val("");
+                partName = $("#partName").val("");
+                empName = $("#empName").val("");
             });
 
         });
 
     });
 
-
-    $("#next").prop("disabled", true);
-
-    $("#next").css({
-        "cursor": "auto"
-    });
-
-    $("#name,#date,#gov,#area,#type,#det").keyup(function () {
-        if ($("#name").val() == "" || $("#date").val() == ""|| $("#gov").val() == "" || $("#area").val() == ""|| $("#type").val() == ""|| $("#det").val() == "") {
-
-            $("#next").prop("disabled", true);
-            $("#next").css({
-                "cursor": "auto"
-            });
-
-        } else {
-            $("#next").prop("disabled", false);
-            $("#next").css({
-                "cursor": "pointer"
-            });
-        }
-    });
+});
 
 
+$("#next").prop("disabled", true);
 
+$("#next").css({
+    "cursor": "auto"
+});
+
+$("#name,#date,#gov,#area,#type,#det").keyup(function () {
+    if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+        $("#next").prop("disabled", true);
+        $("#next").css({
+            "cursor": "auto"
+        });
+
+    } else {
+        $("#next").prop("disabled", false);
+        $("#next").css({
+            "cursor": "pointer"
+        });
+    }
+});
+
+$("#date").change(function () {
+    if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+        $("#next").prop("disabled", true);
+        $("#next").css({
+            "cursor": "auto"
+        });
+
+    } else {
+        $("#next").prop("disabled", false);
+        $("#next").css({
+            "cursor": "pointer"
+        });
+    }
 });

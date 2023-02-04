@@ -242,6 +242,10 @@ margin: 24px 0;
     border: 1px solid rgb(0, 0, 0, 0.5);
 }
 
+#table{
+    text-align: center;
+}
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;

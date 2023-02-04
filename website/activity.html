@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="javas.js"></script>
+    <!-- <script src="javas.js"></script> -->
 </head>
 
 
@@ -105,6 +105,487 @@
         </div>
         <button id="next4">إنهاء</button>
     </section>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#bar").click(function () {
+                $(".navbare").toggleClass("active");
+                $(this).toggleClass("fa-times");
+            });
+
+            function add(sql) {
+                $.ajax({
+                    url: "../controlPanal/phpFile/add.php",
+                    data: { sqlAdd: sql },
+                    type: "post",
+                    success: function (out) {
+                    }
+                });
+            }
+
+
+            function ReloadPro(sql) {
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        ht = "";
+                        for (i = 0; i < data.length; i++) {
+                            ht += "<option value=\"" + data[i].project_name + "\">" + data[i].project_name + "</option>";
+                        }
+                        $("#pro").html(ht);
+                    }
+                });
+            }
+            ReloadPro("SELECT project_name FROM `project`");
+
+            function ReloadProg(sql) {
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        ht = "";
+                        for (i = 0; i < data.length; i++) {
+                            ht += "<option value=\"" + data[i].program_name + "\">" + data[i].program_name + "</option>";
+                        }
+                        $("#prog").html(ht);
+                    }
+                });
+            }
+            ReloadProg("SELECT program_name FROM `programs`");
+
+            function Reloadpart(sql) {
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        ht = "";
+                        for (i = 0; i < data.length; i++) {
+                            ht += "<option value=\"" + data[i].participants_name + "\">" + data[i].participants_name + "</option>";
+                        }
+                        $("#partName").html(ht);
+                    }
+                });
+            }
+            Reloadpart("SELECT participants_name FROM `participants`");
+
+            function Reloadnick(sql) {
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        ht = "";
+                        for (i = 0; i < data.length; i++) {
+                            ht += "<option value=\"" + data[i].nickname + "\">" + data[i].nickname + "</option>";
+                        }
+                        $("#nick").html(ht);
+                    }
+                });
+            }
+            Reloadnick("SELECT nickname FROM `nicknames`");
+
+
+            $("#next").click(function () {
+                name1 = $("#name").val();
+                pro = $("#pro").val();
+                prog = $("#prog").val();
+                date = $("#date").val();
+                gov = $("#gov").val();
+                area = $("#area").val();
+                type = $("#type").val();
+                det = $("#det").val();
+
+                sqlAdd = "INSERT INTO `activities`(`activity_name`, `activity_date`, `activity_Governorate`, `activity_area`, `activity_type`, `activity_details`, `program_name`, `project_name`) VALUES " +
+                    "('" + name1 + "','" + date + "','" + gov + "','" + area + "','" + type + "','" + det + "','" + prog + "','" + pro + "')";
+
+                $.ajax({
+                    url: "../controlPanal/phpFile/add.php",
+                    data: { sqlAdd: sqlAdd },
+                    type: "post",
+                    success: function (out) {
+                        if (out == "successfully") {
+                            $("#he1").toggle();
+                            $("#he2").toggle();
+                        } else {
+                            alert(out);
+                        }
+                    }
+                });
+
+
+                $("#bt_parti").click(function () {
+                    partName = $("#partName").val();
+
+                    sqlAdd2 = "INSERT INTO `act_part`(`participant_name`, `activity_name`) VALUES " +
+                        "('" + partName + "','" + name1 + "')";
+
+                    $.ajax({
+                        url: "../controlPanal/phpFile/add.php",
+                        data: { sqlAdd: sqlAdd2 },
+                        type: "post",
+                        success: function (out) {
+                            if (out == "successfully") {
+                                partName = $("#partName").val("");
+                                alert("تمت الاضافة");
+                            } else {
+                                alert(out);
+                            }
+                        }
+                    });
+
+                });
+
+                $("#next2").click(function () {
+                    $("#he2").toggle();
+                    $("#he3").toggle();
+
+                    $("#bt_empname").click(function () {
+
+                        empName = $("#empName").val();
+                        sqlAddempName = "INSERT INTO `employees`(`emp_name`) VALUES ('" + empName + "')";
+
+
+                        $.ajax({
+                            url: "../controlPanal/phpFile/add.php",
+                            data: { sqlAdd: sqlAddempName },
+                            type: "post",
+                            success: function (out) {
+
+                                sqlMax = "SELECT MAX(`emp_id`) as idMax FROM `employees`";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/show.php",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: { sql: sqlMax },
+                                    success: function (output) {
+                                        empMax = output[0].idMax;
+
+                                        addEmpAct = "INSERT INTO `act_emp`(`emp_id`, `activity_name`) VALUES ('" + empMax + "','" + name1 + "')";
+                                        $.ajax({
+                                            url: "../controlPanal/phpFile/add.php",
+                                            data: { sqlAdd: addEmpAct },
+                                            type: "post",
+                                            success: function (out) {
+                                                empName = $("#empName").val("");
+                                                alert("تمت الاضافة")
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+                        });
+
+
+                    });
+
+                    $("#bt_bbniName").click(function () {
+                        bini = $("#bini").val();
+                        biniAge = $("#biniAge").val();
+                        biniSex = $("#biniSex").val();
+
+                        sqlAdd6 = "INSERT INTO `beneficiaries`(`beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
+                            " ('" + bini + "','" + biniAge + "','" + biniSex + "')";
+
+
+                        $.ajax({
+                            url: "../controlPanal/phpFile/add.php",
+                            data: { sqlAdd: sqlAdd6 },
+                            type: "post",
+                            success: function (out) {
+
+                                if (out == "successfully") {
+                                } else {
+                                    alert(out);
+                                }
+
+                                sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`) VALUES" +
+                                    " ('" + name1 + "','" + bini + "')";
+
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/add.php",
+                                    data: { sqlAdd: sqlAdd7 },
+                                    type: "post",
+                                    success: function (out) {
+                                        bini = $("#bini").val("");
+                                        biniAge = $("#biniAge").val("");
+                                        biniSex = $("#biniSex").val("");
+                                        alert("تمت الاضافة");
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    $("#next3").click(function () {
+                        $("#he3").toggle();
+                        $("#he4").toggle();
+
+                        $("#bt_link").click(function () {
+                            links = $("#links").val();
+
+                            sqlAdd8 = "INSERT INTO `links`(`link`, `activity_name`) VALUES" +
+                                " ('" + links + "','" + name1 + "')";
+
+                            $.ajax({
+                                url: "../controlPanal/phpFile/add.php",
+                                data: { sqlAdd: sqlAdd8 },
+                                type: "post",
+                                success: function (out) {
+                                    if (out == "successfully") {
+                                        links = $("#links").val("");
+                                        alert("تمت الاضافة");
+                                    } else {
+                                        alert(out);
+                                    }
+                                }
+                            });
+                        });
+
+                        $("#bt_att").click(function () {
+
+                            var pic = $("#file").prop('files')[0];
+                            pisSql = "INSERT INTO `attachments`(`attachment`, `activity_name`) VALUES ('" + pic + "','" + name1 + "')";
+                            $.ajax({
+                                url: "../controlPanal/phpFile/add.php",
+                                data: { sqlAdd: pisSql },
+                                type: "post",
+                                success: function (out) {
+                                    if (out == "successfully") {
+                                        alert("تمت الاضافة");
+                                    } else {
+                                        alert(out);
+                                    }
+                                }
+                            });
+                        });
+                    });
+
+                    $("#bt_chall").click(function () {
+                        chall = $("#chall").val();
+                        alert(chall);
+
+                        sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES ('" + chall + "')";
+
+
+                        $.ajax({
+                            url: "../controlPanal/phpFile/add.php",
+                            data: { sqlAdd: sqlAdd9 },
+                            type: "post",
+                            success: function (out) {
+                                alert(out);
+                                sqlMax = "SELECT MAX(`challenge_id`) AS ms FROM `challenges`";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/show.php",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: { sql: sqlMax },
+                                    success: function (output) {
+                                        challMax = output[0].ms;
+
+                                        addChallAct = "INSERT INTO `activ_chall`(`challenge_id`, `activity_name`) VALUES ('" + challMax + "','" + name1 + "')";
+                                        $.ajax({
+                                            url: "../controlPanal/phpFile/add.php",
+                                            data: { sqlAdd: addChallAct },
+                                            type: "post",
+                                            success: function (out) {
+                                                if (out == "successfully") {
+                                                    alert("تمت الاضافة");
+                                                    chall = $("#chall").val("");
+                                                } else {
+                                                    alert(out);
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    });
+
+                    $("#next4").click(function () {
+                        $("#he4").toggle();
+                        $("#he1").toggle();
+
+                        name1 = $("#name").val("");
+                        pro = $("#pro").val("");
+                        prog = $("#prog").val("");
+                        date = $("#date").val("");
+                        gov = $("#gov").val("");
+                        area = $("#area").val("");
+                        type = $("#type").val("");
+                        det = $("#det").val("");
+                        chall = $("#chall").val("");
+                        links = $("#links").val("");
+                        bini = $("#bini").val("");
+                        biniAge = $("#biniAge").val("");
+                        biniSex = $("#biniSex").val("");
+                        partName = $("#partName").val("");
+                        empName = $("#empName").val("");
+                    });
+
+                });
+
+            });
+
+        });
+
+
+        $("#next").prop("disabled", true);
+
+        $("#next").css({
+            "cursor": "auto"
+        });
+
+        $("#name,#date,#gov,#area,#type,#det").keyup(function () {
+            if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+                $("#next").prop("disabled", true);
+                $("#next").css({
+                    "cursor": "auto"
+                });
+
+            } else {
+                $("#next").prop("disabled", false);
+                $("#next").css({
+                    "cursor": "pointer"
+                });
+            }
+        });
+
+        $("#date").change(function () {
+            if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+                $("#next").prop("disabled", true);
+                $("#next").css({
+                    "cursor": "auto"
+                });
+
+            } else {
+                $("#next").prop("disabled", false);
+                $("#next").css({
+                    "cursor": "pointer"
+                });
+            }
+        });
+
+    </script>
+
+    <section id="table">
+        <h2>جميع النشاطات</h2>
+
+        <input type="text" name="name" placeholder="# البحث">
+
+        <script>
+            $(document).ready(function () {
+                $("#tableDis input").keyup(function () {
+                    val = $(this).val();
+                    if (val == "") {
+                        sql = "SELECT * FROM `users`";
+                    } else {
+                        sql = "SELECT * FROM `users` WHERE `permission` like '%" + val + "%' || `username` like '%" + val + "%' || `password` like '%" + val + "%'";
+                    }
+                    reload(sql);
+                });
+            });
+        </script>
+
+        <table class="table" id="table">
+
+        </table>
+
+        <script>
+            $(document).ready(function () {
+                sql = "SELECT * FROM `users`";
+                reload(sql);
+            });
+
+            $(document).on('click', '.remove-btn', function () {
+                id = $(this).data('id');
+                table = "users";
+                feild = "username";
+                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+                $.ajax({
+                    url: "phpFile/remove.php",
+                    data: { sql: sql },
+                    type: "post",
+                    success: function (out) {
+                        reload("SELECT * FROM `users`");
+                    }
+                });
+            });
+
+            let id;
+            $(document).on('click', '.edit-btn', function () {
+                id = $(this).data('id');
+                sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
+                $.ajax({
+                    url: "phpFile/show.php",
+                    data: { sql: sql },
+                    type: "post",
+                    dataType: "json",
+                    success: function (out) {
+
+                        name = out[0].username;
+                        password = out[0].password;
+                        pir = out[0].permission;
+
+                        $("#name").val(name);
+                        $("#password").prop("type", "text");
+                        $("#password").val(password);
+                        $("#pir").val(pir);
+
+                        setTimeout(function () {
+                            window.location.replace("users.html#hero");
+                        }, 400);
+
+                        $("#add").toggle();
+                        $("#edit").toggle();
+                    }
+                });
+            });
+
+            $("#edit").click(function () {
+                nameAdd = $("#name").val();
+                passAdd = $("#password").val();
+                pirAdd = $("#pir").val();
+                sqlup = "UPDATE `users` SET `username`='" + nameAdd + "',`password`='" + passAdd + "',`permission`='" + pirAdd + "' WHERE id = '" + id + "'";
+                $.ajax({
+                    url: "phpFile/update.php",
+                    data: { sqlup: sqlup },
+                    type: "post",
+                    success: function () {
+                        $("#name").val("");
+                        $("#password").prop("type", "password");
+                        $("#password").val("");
+
+                        $("#add").toggle();
+                        $("#edit").toggle();
+                        reload("SELECT * FROM `users`");
+                        setTimeout(function () {
+                            window.location.replace("users.html#table");
+                        }, 400);
+                    }
+                });
+            });
+        </script>
+
+    </section>
+
+
 
     <!-- start footer -->
     <footer>
