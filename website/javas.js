@@ -1,3 +1,58 @@
+$(document).on('click', '.remove-btn', function () {
+    id = $(this).data('id');
+    table = "activities";
+    feild = "activity_name";
+    sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+            reload("SELECT * FROM `activities`");
+        }
+    });
+});
+
+let id;
+$(document).on('click', '.edit-btn', function () {
+
+    function openInNewTab(url) {
+        var a = document.createElement("a");
+        a.target = "_blank";
+        a.href = url;
+        a.click();
+    }
+
+    id = $(this).data('id');
+    openInNewTab("activityEdit.html?name=" + id);
+});
+
+function reload(sql) {
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            ht = "<tr> <th>إسم النشاط</th> <th> تاريخ النشاط</th> <th>المحافظة</th> <th>المنطقة</th>  <th>النوع</th> <th>التفاصيل</th> <th>البرنامج</th> <th>المشروع</th> <th>الحذف</th><th>النعديل</th></tr>";
+            for (i = 0; i < data.length; i++) {
+                ht += "<tr><td>" + data[i].activity_name + "</td><td>" + data[i].activity_date
+                    + "</td><td>" + data[i].activity_Governorate + "</td><td>" + data[i].activity_area
+                    + "</td><td>" + data[i].activity_type + "</td><td>" + data[i].activity_details
+                    + "</td><td>" + data[i].program_name + "</td><td>" + data[i].project_name
+                    + "</td>" + "<td><button data-id=" +
+                    data[i].activity_name + " class=\"remove-btn\">حذف</button></td> <td><button data-id=" +
+                    data[i].activity_name + " class=\"edit-btn\">تعديل</button></td></tr>";
+            }
+            $(".table").html(ht);
+        }
+    });
+}
+
+$(document).ready(function () {
+    reload("SELECT * FROM `activities`");
+});
+
 $(document).ready(function () {
 
     $("#bar").click(function () {
@@ -266,7 +321,7 @@ $(document).ready(function () {
                 chall = $("#chall").val();
                 alert(chall);
 
-                sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES ('"+chall+"')";
+                sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES ('" + chall + "')";
 
 
                 $.ajax({

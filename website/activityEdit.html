@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النشاطات</title>
-    <link rel="stylesheet" href="style.css">
+    <title> تعديل النشاط</title>
+    <link rel="stylesheet" href="actEdit.css">
     <link rel="shortcut icon" href="img/smallLogo.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="javas.js"></script>
+    <script src="activityEditjava.js"></script>
 </head>
 
 
@@ -40,8 +40,7 @@
         </div>
     </section>
 
-
-    <section class="hero" id="he1">
+    <section class="hero" id="hero1">
         <div class="inf">
             <h6>إسم النشاط</h6>
             <input type="text" id="name">
@@ -63,20 +62,34 @@
         <button id="next">التالي</button>
     </section>
 
-    <section class="hero" id="he2">
+    <section class="hero" id="hero2" style=" display: none;">
         <div class="inf">
             <h6> إسم المشارك</h6>
             <select name="partName" id="partName"></select>
         </div>
         <button id="bt_parti" class="add2">اضف</button>
+
+        <table id="partTable">
+        </table>
+
         <button id="next2">التالي</button>
     </section>
 
-    <section class="hero" id="he3">
+    <section class="hero" id="hero3" style=" display: none;">
         <div class="inf">
             <h6> إسم الموظف</h6>
             <input type="text" name="empName" id="empName">
             <button id="bt_empname" class="add2">اضف</button>
+            <table id="empTable">
+
+            </table>
+        </div>
+        <button id="next3">التالي</button>
+    </section>
+
+    <section class="hero" id="hero4" style=" display: none;">
+        <div class="inf">
+
             <h6> إسم المستفيد</h6>
             <input type="text" name="bini" id="bini">
             <h6> عمر المستفيد</h6>
@@ -87,11 +100,16 @@
                 <option value="انثى">انثى</option>
             </select>
             <button id="bt_bbniName" class="add2">اضف</button>
+            <button id="bt_bbniNameEdit" class="add2" style="display: none;">تعديل</button>
+
+            <table id="biniTable">
+
+            </table>
         </div>
-        <button id="next3">التالي</button>
+        <button id="next4">التالي</button>
     </section>
 
-    <section class="hero" id="he4">
+    <section class="hero" id="hero5" style=" display: none;">
         <div class="inf">
             <h6>روابط</h6>
             <input type="text" name="links" id="links">
@@ -104,17 +122,6 @@
             <button id="bt_chall" class="add2">اضف</button>
         </div>
         <button id="next4">إنهاء</button>
-    </section>
-
-    <section id="tableShow">
-        <h2>جميع النشاطات</h2>
-
-        <input type="text" name="search" id="search" placeholder="# البحث">
-
-        <table class="table" id="table">
-
-        </table>
-
     </section>
 
     <!-- start footer -->
