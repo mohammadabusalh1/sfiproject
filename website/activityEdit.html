@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="activityEditjava.js"></script>
+
+    <style>
+        #linkTable a {
+            width: 750px;
+            display: block;
+            overflow: auto;
+            direction: ltr;
+        }
+    </style>
+
 </head>
 
 
@@ -114,14 +124,32 @@
             <h6>روابط</h6>
             <input type="text" name="links" id="links">
             <button id="bt_link" class="add2">اضف</button>
-            <h6>مرفق</h6>
-            <input id="file" type="file">
-            <button id="bt_att" class="add2">اضف</button>
+
+            <table id="linkTable">
+
+            </table>
+
             <h6>التحديات</h6>
             <textarea name="chall" id="chall" rows="3"></textarea>
             <button id="bt_chall" class="add2">اضف</button>
+
+
+            <table id="challTable">
+
+            </table>
+
         </div>
         <button id="next4">إنهاء</button>
+    </section>
+
+    <section  class="hero" id="hero6" style=" display: none;">
+        <h6>مرفق</h6>
+        <input id="file" type="file">
+        <button id="bt_att" class="add2">اضف</button>
+
+        <table id="attTable">
+
+        </table>
     </section>
 
     <!-- start footer -->

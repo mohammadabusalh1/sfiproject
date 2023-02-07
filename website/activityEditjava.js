@@ -135,7 +135,7 @@ $(document).ready(function () {
                             }
                             $("#partTable").html(ht);
 
-                            $(document).on('click', '.remove-btn', function () {
+                            $("#partTable").on('click', '.remove-btn', function () {
                                 id = $(this).data('id');
                                 table = "act_part";
                                 feild = "participant_name";
@@ -311,7 +311,7 @@ $(document).ready(function () {
             }
         });
 
-        $(document).on('click', '.remove-btn', function () {
+        $("#empTable").on('click', '.remove-btn', function () {
             id = $(this).data('id');
             table = "act_emp";
             feild = "emp_id";
@@ -433,7 +433,7 @@ $(document).ready(function () {
 
         });
 
-        $(document).on('click', '.remove-btn', function () {
+        $("#biniTable").on('click', '.remove-btn', function () {
             id = $(this).data('id');
             var arr = id.split("%");
             table = "activ_bene";
@@ -538,9 +538,177 @@ $(document).ready(function () {
 
     });
 
-    $("#next4").click(function(){
+    $("#next4").click(function () {
         $("#hero4").toggle();
         $("#hero5").toggle();
+
+
+        function linkLoad() {
+            sql = "SELECT * FROM `links` WHERE `activity_name`='" + activityName + "'";
+            $.ajax({
+                url: "../controlPanal/phpFile/show.php",
+                data: { sql: sql },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    ht = "<tr><th> الرابط</th> <th>الحذف</th></tr>";
+                    for (i = 0; i < data.length; i++) {
+                        ht += "<tr><td><a target=\"_blank\" href=" + data[i].link + ">" + data[i].link + "</a></td><td><button data-id=" + data[i].link_id +
+                            " class=\"remove-btn\">حذف</button></td></tr>";
+                    }
+                    $("#linkTable").html(ht);
+                }
+            });
+        }
+        linkLoad();
+
+        $("#bt_link").click(function () {
+            links = $("#links").val();
+
+            sqlAdd8 = "INSERT INTO `links`(`link`, `activity_name`) VALUES" +
+                " ('" + links + "','" + activityName + "')";
+
+            $.ajax({
+                url: "../controlPanal/phpFile/add.php",
+                data: { sqlAdd: sqlAdd8 },
+                type: "post",
+                success: function (out) {
+                    if (out == "successfully") {
+                        links = $("#links").val("");
+                        linkLoad();
+                        alert("تمت الاضافة");
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
+        });
+
+
+        $("#linkTable").on('click', '.remove-btn', function () {
+            id = $(this).data('id');
+            table = "links";
+            feild = "link_id";
+            sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+            $.ajax({
+                url: "../controlPanal/phpFile/remove.php",
+                data: { sql: sql },
+                type: "post",
+                success: function (out) {
+                    if (out == "remove successfully") {
+                        linkLoad();
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
+        });
+
+        function challLoad() {
+            sql = "SELECT * FROM `activ_chall` WHERE `activity_name`='" + activityName + "'";
+            $.ajax({
+                url: "../controlPanal/phpFile/show.php",
+                data: { sql: sql },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    ht = "<tr><th> التحدي</th> <th>الحذف</th></tr>";
+                    for (i = 0; i < data.length; i++) {
+                        sql1 = "SELECT * FROM `challenges` WHERE `challenge_id`='" + data[i].challenge_id + "'";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/show.php",
+                            data: { sql: sql1 },
+                            dataType: "json",
+                            type: "post",
+                            success: function (data1) {
+                                ht += "<tr><td>" + data1[0].challenge + "</td><td><button data-id=" + data1[0].challenge_id +
+                                    " class=\"remove-btn\">حذف</button></td></tr>";
+                                    $("#challTable").html(ht);
+                            }
+                        });
+                    }
+                    $("#challTable").html(ht);
+                }
+            });
+        }
+        challLoad();
+
+        $("#bt_chall").click(function () {
+            chall = $("#chall").val();
+
+            sqlAdd8 = "INSERT INTO `challenges`(`challenge`) VALUES ('" + chall + "')";
+            $.ajax({
+                url: "../controlPanal/phpFile/add.php",
+                data: { sqlAdd: sqlAdd8 },
+                type: "post",
+                success: function (out) {
+                    if (out == "successfully") {
+                        sqlAddChall9 = "SELECT MAX(`challenge_id`) as maxChall FROM `challenges`";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/show.php",
+                            data: { sql: sqlAddChall9 },
+                            type: "post",
+                            dataType: "json",
+                            success: function (challOut) {
+                                sqlAdd10 = "INSERT INTO `activ_chall`(`challenge_id`, `activity_name`) VALUES ('" + challOut[0].maxChall +
+                                    "','" + activityName + "')";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/add.php",
+                                    data: { sqlAdd: sqlAdd10 },
+                                    type: "post",
+                                    success: function (out2) {
+                                        if (out2 == "successfully") {
+                                            $("#chall").val("");
+                                            challLoad();
+                                            alert("تمت الاضافة");
+                                        } else {
+                                            alert(out2);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
+        });
+
+
+        $("#challTable").on('click', '.remove-btn', function () {
+            id = $(this).data('id');
+            table = "activ_chall";
+            feild = "challenge_id";
+            sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+            $.ajax({
+                url: "../controlPanal/phpFile/remove.php",
+                data: { sql: sql },
+                type: "post",
+                success: function (out) {
+                    if (out == "remove successfully") {
+                        sql16 = "DELETE FROM `challenges` WHERE `" + feild + "` = '" + id + "'";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/remove.php",
+                            data: { sql: sql16 },
+                            type: "post",
+                            success: function (out) {
+                                if (out == "remove successfully") {
+                                    challLoad();
+                                } else {
+                                    alert(out);
+                                }
+                            }
+                        });
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
+
+        });
+
+
     });
 
 });
