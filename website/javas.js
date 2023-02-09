@@ -15,16 +15,8 @@ $(document).on('click', '.remove-btn', function () {
 
 let id;
 $(document).on('click', '.edit-btn', function () {
-
-    function openInNewTab(url) {
-        var a = document.createElement("a");
-        a.target = "_blank";
-        a.href = url;
-        a.click();
-    }
-
     id = $(this).data('id');
-    openInNewTab("activityEdit.html?name=" + id);
+    window.location.replace("activityEdit.html?name=" + id);
 });
 
 function reload(sql) {

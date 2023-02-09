@@ -715,25 +715,29 @@ $(document).ready(function () {
         $("#hero5").toggle();
         $("#hero6").toggle();
 
-        $.ajax({
-            url: 'php/getImg.php',
-            data: { activityName: activityName },
-            type: 'POST',
-            success: function (out) {
-                if (out != "Image not found") {
-                    var imgSrc = out;
-                    $("#img").attr("src", "img/images/"+imgSrc);
-                } else {
-                    alert(out);
+        function relodImage() {
+
+            $.ajax({
+                url: 'php/getImg.php',
+                data: { activityName: activityName },
+                type: 'POST',
+                success: function (out) {
+                    if (out != "Image not found") {
+                        $("#tab").html(out);
+                    } else {
+                        alert(out);
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        relodImage();
 
         $("#bt_att").click(function () {
             var formData = new FormData();
             formData.append('file', $('#file')[0].files[0]);
             formData.append('activityName', activityName);
-        
+
             $.ajax({
                 url: 'php/addImage.php',
                 data: formData,
@@ -742,6 +746,7 @@ $(document).ready(function () {
                 processData: false,
                 success: function (out) {
                     if (out == "Image added successfully") {
+                        relodImage();
                         alert("تمت الاضافة");
                     } else {
                         alert(out);
@@ -750,7 +755,37 @@ $(document).ready(function () {
             });
         });
 
+        $("#tab").on('click', '.img_remove', function () {
+            id = $(this).data('id');
+            var arr = id.split(",");
 
+            sql = "DELETE FROM `attachments` WHERE `attachment_id`='" + arr[0] + "'";
+            $.ajax({
+                url: "../controlPanal/phpFile/remove.php",
+                data: { sql: sql },
+                type: "post",
+                success: function (out) {
+                    if (out == "remove successfully") {
+                        
+                        $.ajax({
+                            url: "php/removeImage.php",
+                            data: { name: arr[1] },
+                            type: "get",
+                            success: function (out) {
+                                relodImage();
+                            }
+                        });
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
 
+        });
+
+    });
+
+    $("#next6").click(function () {
+        window.location.replace("activity.html");
     });
 });

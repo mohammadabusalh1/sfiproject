@@ -15,7 +15,7 @@ if (isset($_FILES['file'])) {
 
     if (in_array($fileActualExt, $allowed)) {
         if ($fileError === 0) {
-            if ($fileSize < 1000000) {
+            if ($fileSize < 9999999999) {
                 $fileNameNew = uniqid('', true) . "." . $fileActualExt;
                 $fileDestination = '../img/images/' . $fileNameNew;
                 move_uploaded_file($fileTmpName, $fileDestination);
@@ -33,13 +33,13 @@ if (isset($_FILES['file'])) {
                 }
                 mysqli_close($con);
             } else {
-                echo "File is too big";
+                echo "الملف حجمه كبير";
             }
         } else {
-            echo "There was an error uploading your file";
+            echo "يوجد مشكلة في تحميل الملف";
         }
     } else {
-        echo "You cannot upload files of this type";
+        echo "لا يمكن تحميل هذا النوع من الملفات";
     }
 }
 
