@@ -766,7 +766,7 @@ $(document).ready(function () {
                 type: "post",
                 success: function (out) {
                     if (out == "remove successfully") {
-                        
+
                         $.ajax({
                             url: "php/removeImage.php",
                             data: { name: arr[1] },
@@ -785,7 +785,106 @@ $(document).ready(function () {
 
     });
 
-    $("#next6").click(function () {
+    $(".next6").click(function () {
         window.location.replace("activity.html");
+
+        actName = $("#name").val();
+        pro = $("#pro").val();
+        prog = $("#prog").val();
+        date = $("#date").val();
+        gov = $("#gov").val();
+        area = $("#area").val();
+        type = $("#type").val();
+        det = $("#det").val();
+
+        sqlup = "UPDATE `activities` SET `activity_name`='" + actName
+            + "',`activity_date`='" + date + "',`activity_Governorate`='" + gov +
+            "',`activity_area`='" + area + "',`activity_type`='" + type + "',`activity_details`='" + det +
+            "',`program_name`='" + prog + "',`project_name`='" + pro + "' WHERE `activity_name`='" + activityName + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/update.php",
+            data: { sqlup: sqlup },
+            type: "post",
+            success: function (out) {
+                if (out == "New record update successfully") {
+                    $("#hero1").toggle();
+                    $("#hero2").toggle();
+
+                    sql = "SELECT `participant_name` FROM `act_part` WHERE `activity_name`='" + activityName + "'";
+                    $.ajax({
+                        url: "../controlPanal/phpFile/show.php",
+                        data: { sql: sql },
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            ht = "<tr><th>إسم المشارك</th> <th>الحذف</th></tr>";
+                            for (i = 0; i < data.length; i++) {
+                                ht += "<tr><td>" + data[i].participant_name + "</td><td><button data-id=" +
+                                    data[i].participant_name + " class=\"remove-btn\">حذف</button></td></tr>";
+                            }
+                            $("#partTable").html(ht);
+
+                            $("#partTable").on('click', '.remove-btn', function () {
+                                id = $(this).data('id');
+                                table = "act_part";
+                                feild = "participant_name";
+                                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "' && `activity_name`='" + activityName + "'";
+                                $.ajax({
+                                    url: "../controlPanal/phpFile/remove.php",
+                                    data: { sql: sql },
+                                    type: "post",
+                                    success: function (out) {
+                                        sql = "SELECT `participant_name` FROM `act_part` WHERE `activity_name`='" + activityName + "'";
+                                        $.ajax({
+                                            url: "../controlPanal/phpFile/show.php",
+                                            data: { sql: sql },
+                                            dataType: "json",
+                                            type: "post",
+                                            success: function (data) {
+                                                ht = "<tr><th>إسم المشارك</th> <th>الحذف</th></tr>";
+                                                for (i = 0; i < data.length; i++) {
+                                                    ht += "<tr><td>" + data[i].participant_name + "</td><td><button data-id=" +
+                                                        data[i].participant_name + " class=\"remove-btn\">حذف</button></td></tr>";
+                                                }
+                                                $("#partTable").html(ht);
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
+
+                } else {
+                    alert(out);
+                }
+            }
+        });
+    });
+
+    $("#prev1").click(function () {
+        $("#hero1").toggle();
+        $("#hero2").toggle();
+    });
+
+    $("#prev2").click(function () {
+        $("#hero2").toggle();
+        $("#hero3").toggle();
+    });
+
+    $("#prev3").click(function () {
+        $("#hero3").toggle();
+        $("#hero4").toggle();
+    });
+
+    $("#prev4").click(function () {
+        alert("asdasd");
+        $("#hero5").toggle();
+        $("#hero4").toggle();
+    });
+
+    $("#prev5").click(function () {
+        $("#hero5").toggle();
+        $("#hero6").toggle();
     });
 });

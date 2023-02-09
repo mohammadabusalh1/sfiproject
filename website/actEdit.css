@@ -137,10 +137,20 @@ footer #box_cont .box h4 {
 width: 100%;
 }
 
-#next,#next2,#next3,#next4,#next5,#next6{
+#next,#next2,#next3,#next4,#next5,.next6{
 width: 50%;
-margin: 24px 0;
+margin: 4px 0;
 }
+
+#next{
+    margin-top: 24px; 
+ }
+
+#prev1,#prev2,#prev3,#prev4,#prev5{
+    width: 50%;
+    margin: 4px 0;
+    }
+    
 
 .add2{
     width: auto;
