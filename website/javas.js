@@ -26,7 +26,7 @@ function reload(sql) {
         dataType: "json",
         type: "post",
         success: function (data) {
-            ht = "<tr> <th width=\"10%\">إسم النشاط</th> <th width=\"10%\"> تاريخ النشاط</th> <th width=\"10%\">المحافظة</th> <th width=\"10%\">المنطقة</th>  <th width=\"10%\"> النوع</th> <th width=\"10%\">التفاصيل</th> <th width=\"10%\">البرنامج</th> <th width=\"10%\">المشروع</th> <th width=\"10%\">الحذف</th><th>النعديل</th></tr>";
+            ht = "<tr> <th>إسم النشاط</th> <th> تاريخ النشاط</th> <th>المحافظة</th> <th>المنطقة</th>  <th> النوع</th> <th>التفاصيل</th> <th>البرنامج</th> <th>المشروع</th> <th>الحذف</th><th>النعديل</th></tr>";
             for (i = 0; i < data.length; i++) {
                 ht += "<tr><td>" + data[i].activity_name + "</td><td>" + data[i].activity_date
                     + "</td><td>" + data[i].activity_Governorate + "</td><td>" + data[i].activity_area

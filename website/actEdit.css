@@ -131,6 +131,7 @@ footer #box_cont .box h4 {
     align-items: flex-start;
     padding: var(--padding2);
     width: 80%;
+    overflow-x: auto;
 }
 
 .hero .inf{
@@ -204,6 +205,8 @@ td {
     direction: ltr;
 }
 
+
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;
@@ -215,6 +218,14 @@ td {
         display: block;
         transition: 0.2s linear;
 
+    }
+
+    .hero .inf input, .hero .inf select, textarea{
+        width: 100%;
+    }
+
+    .hero{
+        padding: 40px 20px;
     }
 
     .fa-times {

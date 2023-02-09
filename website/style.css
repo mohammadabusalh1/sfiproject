@@ -246,6 +246,51 @@ margin: 24px 0;
     text-align: center;
 }
 
+#search {
+    width: 40%;
+    border-radius: 8px;
+    padding: 4px 12px;
+    margin: 20px 0;
+}
+
+table {
+    width: 80%;
+    margin: 40px 0;
+}
+
+table,
+th,
+td {
+    border: 1px solid #C58940;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #E5BA73;
+    color: white;
+}
+
+th,
+td {
+    padding: 8px 12px;
+}
+
+.remove {
+    cursor: pointer;
+}
+
+#tableShow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x:auto;
+}
+
+.hero .inf select{
+    width: 50.5%;
+}
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;
@@ -257,6 +302,20 @@ margin: 24px 0;
         display: block;
         transition: 0.2s linear;
 
+    }
+
+    .hero .inf input, .hero .inf select, textarea{
+        width: 100%;
+    }
+
+    .hero{
+        padding: 40px 20px;
+    }
+
+    #tableShow {
+        display: block;
+        overflow-x:auto;
+        text-align: center;
     }
 
     .fa-times {
@@ -353,42 +412,3 @@ margin: 24px 0;
 
 }
 
-#search {
-    width: 40%;
-    border-radius: 8px;
-    padding: 4px 12px;
-    margin: 20px 0;
-}
-
-table {
-    width: 80%;
-    margin: 40px 0;
-}
-
-table,
-th,
-td {
-    border: 1px solid #C58940;
-    border-collapse: collapse;
-}
-
-th {
-    background-color: #E5BA73;
-    color: white;
-}
-
-th,
-td {
-    padding: 8px 12px;
-}
-
-.remove {
-    cursor: pointer;
-}
-
-#tableShow {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
