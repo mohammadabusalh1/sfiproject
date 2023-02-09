@@ -623,7 +623,7 @@ $(document).ready(function () {
                             success: function (data1) {
                                 ht += "<tr><td>" + data1[0].challenge + "</td><td><button data-id=" + data1[0].challenge_id +
                                     " class=\"remove-btn\">حذف</button></td></tr>";
-                                    $("#challTable").html(ht);
+                                $("#challTable").html(ht);
                             }
                         });
                     }
@@ -711,4 +711,46 @@ $(document).ready(function () {
 
     });
 
+    $("#next5").click(function () {
+        $("#hero5").toggle();
+        $("#hero6").toggle();
+
+        $.ajax({
+            url: 'php/getImg.php',
+            data: { activityName: activityName },
+            type: 'POST',
+            success: function (out) {
+                if (out != "Image not found") {
+                    var imgSrc = out;
+                    $("#img").attr("src", "img/images/"+imgSrc);
+                } else {
+                    alert(out);
+                }
+            }
+        });
+
+        $("#bt_att").click(function () {
+            var formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+            formData.append('activityName', activityName);
+        
+            $.ajax({
+                url: 'php/addImage.php',
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function (out) {
+                    if (out == "Image added successfully") {
+                        alert("تمت الاضافة");
+                    } else {
+                        alert(out);
+                    }
+                }
+            });
+        });
+
+
+
+    });
 });

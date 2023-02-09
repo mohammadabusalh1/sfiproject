@@ -60,17 +60,6 @@ $(document).ready(function () {
         $(this).toggleClass("fa-times");
     });
 
-    function add(sql) {
-        $.ajax({
-            url: "../controlPanal/phpFile/add.php",
-            data: { sqlAdd: sql },
-            type: "post",
-            success: function (out) {
-            }
-        });
-    }
-
-
     function ReloadPro(sql) {
         $.ajax({
             url: "../controlPanal/phpFile/show.php",
@@ -385,6 +374,14 @@ $(document).ready(function () {
 
         });
 
+    });
+
+    $("#search").keyup(function(){
+        value = $(this).val();
+        sql ="SELECT * FROM `activities` WHERE `activity_name` like '%"+value+"%' || `activity_date` like '%"+value+
+        "%' || `activity_Governorate` like '%"+value+"%' || `activity_area` like '%"+value+
+        "%' || `activity_type` like '%"+value+"%' || `activity_details` like '%"+value+"%' || `program_name` like '%"+value+"%'";
+        reload(sql);
     });
 
 });

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقرير</title>
+    <link rel="stylesheet" href="rep.css">
+    <link rel="shortcut icon" href="img/smallLogo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="rep.js"></script>
+
+</head>
+
+
+<body dir="rtl">
+
+    <!-- navbare start -->
+    <section id="header">
+        <a href="Mian.html">
+            <h4>ملتقى الطلبة</h4>
+        </a>
+        <nav class="navbare">
+            <a href="Mian.html">
+                <h6>الرئيسية</h6>
+            </a>
+            <a href="activity.html">
+                <h6>الانشطة</h6>
+            </a>
+            <a href="report.html">
+                <h6>التقارير</h6>
+            </a>
+        </nav>
+        <div>
+            <i id="bar" class="fas fa-bars"></i>
+            <a id="logout" href="/sfiProject/login.html"> <i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+    </section>
+
+    <section id="tableShow">
+        <h2>إختر نشاط</h2>
+
+        <input type="text" name="search" id="search" placeholder="# البحث">
+
+        <table class="table" id="table">
+
+        </table>
+
+    </section>
+
+    <section id="filter">
+
+        <div class="fill">
+            <input type="checkbox">إسم النشاط <input type="text" class="in2" name="name" id="name">
+        </div>
+        <div class="fill">
+            <input type="checkbox">تاريخ النشاط <input type="date" class="in2" name="date" id="date">
+        </div>
+        <div class="fill"> <input type="checkbox"> المحافظة <input type="text" class="in2" name="gov" id="gov"></div>
+        <div class="fill"> <input type="checkbox"> المنطقة <input type="text" class="in2" name="area" id="area"></div>
+        <div class="fill"> <input type="checkbox"> النوع <input type="text" class="in2" name="type" id="type"></div>
+        <div class="fill"> <input type="checkbox"> التفاصيل <input type="text" class="in2" name="det" id="det"></div>
+        <div class="fill"> <input type="checkbox"> البرنامج <input type="text" class="in2" name="program" id="program"></div>
+        <div class="fill"> <input type="checkbox"> المشروع <input type="text" class="in2" name="project" id="project"></div>
+    </section>
+
+    <!-- start footer -->
+    <footer>
+        <div id="box_cont">
+            <div class="box">
+                <h4>روابط سريعة</h4>
+                <a href="Mian.html"><i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <h6> الرئيسية </h6>
+                </a>
+                <a href="activity.html"><i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <h6> الأنشطة </h6>
+                </a>
+                <a href="report.html"><i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <h6> التقارير </h6>
+                </a>
+            </div>
+
+            <div class="box">
+                <h4>تواصل معنا</h4>
+                <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
+                    <h6> 97022751882+ </h6>
+                </a>
+                <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
+                    <h6> info@ysfi.ps </h6>
+                </a>
+            </div>
+
+            <div class="box">
+                <h4>تابعنا</h4>
+                <a target="_blank" href="https://www.facebook.com/SFI.Palestine"><i class="fab fa-facebook-f"></i>
+                    <h6> فيسبوك </h6>
+                </a>
+                <a href="Mian.html"><i class="fab fa-instagram" aria-hidden="true"></i>
+                    <h6> انستاجرام </h6>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
