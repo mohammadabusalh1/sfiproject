@@ -11,6 +11,60 @@ $(document).on('click', '.remove-btn', function () {
             reload("SELECT * FROM `activities`");
         }
     });
+
+    sql = "DELETE FROM `activ_bene` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
+
+    sql = "DELETE FROM `activ_chall` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
+
+    sql = "DELETE FROM `act_emp` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
+
+    sql = "DELETE FROM `act_part` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
+
+    sql = "DELETE FROM `attachments` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
+
+    sql = "DELETE FROM `links` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/remove.php",
+        data: { sql: sql },
+        type: "post",
+        success: function (out) {
+        }
+    });
 });
 
 let id;
@@ -18,6 +72,8 @@ $(document).on('click', '.edit-btn', function () {
     id = $(this).data('id');
     window.location.replace("activityEdit.html?name=" + id);
 });
+
+
 
 function reload(sql) {
     $.ajax({
@@ -43,6 +99,8 @@ function reload(sql) {
 
 $(document).ready(function () {
     reload("SELECT * FROM `activities`");
+
+
 });
 
 $(document).ready(function () {
@@ -142,6 +200,7 @@ $(document).ready(function () {
                 if (out == "successfully") {
                     $("#he1").toggle();
                     $("#he2").toggle();
+                    $("#tableShow").toggle();
                 } else {
                     alert(out);
                 }
@@ -161,7 +220,7 @@ $(document).ready(function () {
                 type: "post",
                 success: function (out) {
                     if (out == "successfully") {
-                        partName = $("#partName").val("");
+                        $("#partName").val("");
                         alert("تمت الاضافة");
                     } else {
                         alert(out);
@@ -202,7 +261,7 @@ $(document).ready(function () {
                                     data: { sqlAdd: addEmpAct },
                                     type: "post",
                                     success: function (out) {
-                                        empName = $("#empName").val("");
+                                        $("#empName").val("");
                                         alert("تمت الاضافة")
                                     }
                                 });
@@ -217,41 +276,32 @@ $(document).ready(function () {
             });
 
             $("#bt_bbniName").click(function () {
-                bini = $("#bini").val();
+                biniName = $("#bini").val();
                 biniAge = $("#biniAge").val();
                 biniSex = $("#biniSex").val();
 
-                sqlAdd6 = "INSERT INTO `beneficiaries`(`beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
-                    " ('" + bini + "','" + biniAge + "','" + biniSex + "')";
 
+                sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
+                    " ('" + name1 + "','" + biniName + "','" + biniAge + "','" + biniSex + "')";
 
                 $.ajax({
                     url: "../controlPanal/phpFile/add.php",
-                    data: { sqlAdd: sqlAdd6 },
+                    data: { sqlAdd: sqlAdd7 },
                     type: "post",
                     success: function (out) {
-
                         if (out == "successfully") {
+                            $("#bini").val("");
+                            $("#biniAge").val("");
+                            $("#biniSex").val("");
+                            alert("تمت الاضافة");
                         } else {
                             alert(out);
                         }
 
-                        sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`) VALUES" +
-                            " ('" + name1 + "','" + bini + "')";
-
-                        $.ajax({
-                            url: "../controlPanal/phpFile/add.php",
-                            data: { sqlAdd: sqlAdd7 },
-                            type: "post",
-                            success: function (out) {
-                                bini = $("#bini").val("");
-                                biniAge = $("#biniAge").val("");
-                                biniSex = $("#biniSex").val("");
-                                alert("تمت الاضافة");
-                            }
-                        });
                     }
                 });
+
+
             });
 
             $("#next3").click(function () {
@@ -270,7 +320,7 @@ $(document).ready(function () {
                         type: "post",
                         success: function (out) {
                             if (out == "successfully") {
-                                links = $("#links").val("");
+                                $("#links").val("");
                                 alert("تمت الاضافة");
                             } else {
                                 alert(out);
@@ -280,15 +330,18 @@ $(document).ready(function () {
                 });
 
                 $("#bt_att").click(function () {
+                    var formData = new FormData();
+                    formData.append('file', $('#file')[0].files[0]);
+                    formData.append('activityName', name1);
 
-                    var pic = $("#file").prop('files')[0];
-                    pisSql = "INSERT INTO `attachments`(`attachment`, `activity_name`) VALUES ('" + pic + "','" + name1 + "')";
                     $.ajax({
-                        url: "../controlPanal/phpFile/add.php",
-                        data: { sqlAdd: pisSql },
-                        type: "post",
+                        url: 'php/addImage.php',
+                        data: formData,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
                         success: function (out) {
-                            if (out == "successfully") {
+                            if (out == "Image added successfully") {
                                 alert("تمت الاضافة");
                             } else {
                                 alert(out);
@@ -300,7 +353,6 @@ $(document).ready(function () {
 
             $("#bt_chall").click(function () {
                 chall = $("#chall").val();
-                alert(chall);
 
                 sqlAdd9 = "INSERT INTO `challenges`(`challenge`) VALUES ('" + chall + "')";
 
@@ -310,7 +362,6 @@ $(document).ready(function () {
                     data: { sqlAdd: sqlAdd9 },
                     type: "post",
                     success: function (out) {
-                        alert(out);
                         sqlMax = "SELECT MAX(`challenge_id`) AS ms FROM `challenges`";
                         $.ajax({
                             url: "../controlPanal/phpFile/show.php",
@@ -328,7 +379,7 @@ $(document).ready(function () {
                                     success: function (out) {
                                         if (out == "successfully") {
                                             alert("تمت الاضافة");
-                                            chall = $("#chall").val("");
+                                            $("#chall").val("");
                                         } else {
                                             alert(out);
                                         }
@@ -346,6 +397,7 @@ $(document).ready(function () {
             $("#next4").click(function () {
                 $("#he4").toggle();
                 $("#he1").toggle();
+                $("#tableShow").toggle();
 
                 name1 = $("#name").val("");
                 pro = $("#pro").val("");
@@ -362,57 +414,21 @@ $(document).ready(function () {
                 biniSex = $("#biniSex").val("");
                 partName = $("#partName").val("");
                 empName = $("#empName").val("");
+                reload("SELECT * FROM `activities`");
             });
 
         });
 
     });
 
-    $("#search").keyup(function(){
+    $("#search").keyup(function () {
         value = $(this).val();
-        sql ="SELECT * FROM `activities` WHERE `activity_name` like '%"+value+"%' || `activity_date` like '%"+value+
-        "%' || `activity_Governorate` like '%"+value+"%' || `activity_area` like '%"+value+
-        "%' || `activity_type` like '%"+value+"%' || `activity_details` like '%"+value+"%' || `program_name` like '%"+value+"%'";
+        sql = "SELECT * FROM `activities` WHERE `activity_name` like '%" + value + "%' || `activity_date` like '%" + value +
+            "%' || `activity_Governorate` like '%" + value + "%' || `activity_area` like '%" + value +
+            "%' || `activity_type` like '%" + value + "%' || `activity_details` like '%" + value + "%' || `program_name` like '%" + value + "%'";
         reload(sql);
     });
 
 });
 
 
-$("#next").prop("disabled", true);
-
-$("#next").css({
-    "cursor": "auto"
-});
-
-$("#name,#date,#gov,#area,#type,#det").keyup(function () {
-    if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
-
-        $("#next").prop("disabled", true);
-        $("#next").css({
-            "cursor": "auto"
-        });
-
-    } else {
-        $("#next").prop("disabled", false);
-        $("#next").css({
-            "cursor": "pointer"
-        });
-    }
-});
-
-$("#date").change(function () {
-    if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
-
-        $("#next").prop("disabled", true);
-        $("#next").css({
-            "cursor": "auto"
-        });
-
-    } else {
-        $("#next").prop("disabled", false);
-        $("#next").css({
-            "cursor": "pointer"
-        });
-    }
-});

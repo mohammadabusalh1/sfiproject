@@ -61,9 +61,50 @@
             <input type="text" id="det">
         </div>
         <button id="next">التالي</button>
+
+        <script>
+            $("#next").prop("disabled", true);
+
+            $("#next").css({
+                "cursor": "auto"
+            });
+
+            $("#name,#date,#gov,#area,#type,#det").keyup(function () {
+                if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+                    $("#next").prop("disabled", true);
+                    $("#next").css({
+                        "cursor": "auto"
+                    });
+
+                } else {
+                    $("#next").prop("disabled", false);
+                    $("#next").css({
+                        "cursor": "pointer"
+                    });
+                }
+            });
+
+            $("#date").change(function () {
+                if ($("#name").val() == "" || $("#date").val() == "" || $("#gov").val() == "" || $("#area").val() == "" || $("#type").val() == "" || $("#det").val() == "") {
+
+                    $("#next").prop("disabled", true);
+                    $("#next").css({
+                        "cursor": "auto"
+                    });
+
+                } else {
+                    $("#next").prop("disabled", false);
+                    $("#next").css({
+                        "cursor": "pointer"
+                    });
+                }
+            });
+
+        </script>
     </section>
 
-    <section class="hero" id="he2">
+    <section class="hero" id="he2" style="display: none;">
         <div class="inf">
             <h6> إسم المشارك</h6>
             <select name="partName" id="partName"></select>
@@ -106,7 +147,7 @@
         <button id="next4">إنهاء</button>
     </section>
 
-    <section id="tableShow">
+    <section id="tableShow" >
         <h2>جميع النشاطات</h2>
 
         <input type="text" name="search" id="search" placeholder="# البحث">

@@ -1,58 +1,222 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <style>
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 1em;
-    }
-    
-    .widget {
-      background-color: lightgray;
-      padding: 1em;
-      text-align: center;
-    }
-    
-    h2 {
-      margin: 0;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التقرير</title>
+  <link rel="stylesheet" href="repShow.css">
+  <link rel="shortcut icon" href="img/smallLogo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+  <script src="rep.js"></script>
+
 </head>
+
 <body>
-  <div class="dashboard">
-    <div class="widget">
-      <h2>Activity Name</h2>
-      <p>Information about the Activity Name goes here</p>
+
+  <section id="main">
+    <br><br>
+    <h2>Activity Name</h2><br>
+
+    <div id="table-cont">
+      <table id="main_table">
+        <tr>
+          <th>Date</th>
+          <td>22/9/2002</td>
+          <th>goales</th>
+        </tr>
+        <tr>
+          <th>Governorate</th>
+          <td>Gov</td>
+          <td rowspan="6">goales1 <br><br> goales2 <br><br> goales3</td>
+        </tr>
+        <tr>
+          <th>Project</th>
+          <td>Project1</td>
+        </tr>
+        <tr>
+          <th>Program</th>
+          <td>program1</td>
+        </tr>
+        <tr>
+          <th>area</th>
+          <td>Surif</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>Type1</td>
+        </tr>
+        <tr>
+          <th>Details</th>
+          <td>Details1</td>
+        </tr>
+      </table>
+
+      <table id="chall_table">
+        <tr>
+          <th>Challenges</th>
+        </tr>
+        <tr>
+          <td>Challenges1</td>
+        </tr>
+        <tr>
+          <td>Challenges2</td>
+        </tr>
+        <tr>
+          <td>Challenge3</td>
+        </tr>
+        <tr>
+          <td>Challenge4</td>
+        </tr>
+        <tr>
+          <td>Challenge5</td>
+        </tr>
+      </table>
+
+
+      <table id="links_table">
+        <tr>
+          <th>Links</th>
+        </tr>
+        <tr>
+          <td><a href="#">Links1</a></td>
+        </tr>
+        <tr>
+          <td><a href="#">Links2</a></td>
+        </tr>
+
+      </table>
+
+      <table id="att_table">
+        <tr>
+          <th>Attachments</th>
+        </tr>
+        <tr>
+          <td>Attachments1</td>
+        </tr>
+        <tr>
+          <td>Attachments2</td>
+        </tr>
+
+      </table>
+
+      <table id="emp_table">
+        <tr>
+          <th>Employees</th>
+        </tr>
+        <tr>
+          <td>employees1</td>
+        </tr>
+        <tr>
+          <td>employees2</td>
+        </tr>
+        <tr>
+          <td>Total number</td>
+        </tr>
+
+      </table>
+
+      <table id="emp_table">
+        <tr>
+          <th colspan="2">Participants</th>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+          <td>Participants1</td>
+          <td>nickname1</td>
+        </tr>
+        <tr>
+          <td>Participants2</td>
+          <td>nickname2</td>
+        </tr>
+        <tr>
+          <td colspan="2">Total number</td>
+        </tr>
+
+      </table>
+
+
+      <div id="chart">
+        <canvas id="myChart"></canvas>
+      </div>
+
+      <script>
+        // Get the context of the canvas element we want to select
+        var ctx = document.getElementById("myChart").getContext("2d");
+
+        // Set the data for the graph
+        var data = {
+          labels: ["Total Beneficiaries", "Males", "Females"],
+          datasets: [
+            {
+              data: [30, 10, 20], // Total Beneficiaries: 30, Males: 10, Females: 20
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ],
+              hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ]
+            }]
+        };
+
+        // Create the chart using the chart.js library
+        var myPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: data
+        });
+
+      </script>
+
+      <div id="chart">
+        <canvas id="myChart1"></canvas>
+      </div>
+
+      <script>
+        // Get the context of the canvas element we want to select
+        var ctx = document.getElementById("myChart1").getContext("2d");
+
+        // Set the data for the graph
+        var data = {
+          labels: ["Targe1", "Target2", "Target3"],
+          datasets: [
+            {
+              data: [30, 10, 20], // Total Beneficiaries: 30, Males: 10, Females: 20
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ],
+              hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ]
+            }]
+        };
+
+        // Create the chart using the chart.js library
+        var myPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: data
+        });
+
+      </script>
+
     </div>
-    <div class="widget">
-      <h2>Activity Date</h2>
-      <p>Information about the Activity Date goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Activity Governorate</h2>
-      <p>Information about the Activity Governorate goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Activity Area</h2>
-      <p>Information about the Activity Area goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Activity Type</h2>
-      <p>Information about the Activity Type goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Activity Details</h2>
-      <p>Information about the Activity Details goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Program Name</h2>
-      <p>Information about the Program Name goes here</p>
-    </div>
-    <div class="widget">
-      <h2>Project Name</h2>
-      <p>Information about the Project Name goes here</p>
-    </div>
-  </div>
+  </section>
+
+
 </body>
+
 </html>

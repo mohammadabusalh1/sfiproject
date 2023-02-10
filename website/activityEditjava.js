@@ -382,54 +382,45 @@ $(document).ready(function () {
             biniAge = $("#biniAge").val();
             biniSex = $("#biniSex").val();
 
-            sqlAdd6 = "INSERT INTO `beneficiaries`(`beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
-                " ('" + biniName + "','" + biniAge + "','" + biniSex + "')";
+            sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
+                " ('" + activityName + "','" + biniName + "','" + biniAge + "','" + biniSex + "')";
+
             $.ajax({
                 url: "../controlPanal/phpFile/add.php",
-                data: { sqlAdd: sqlAdd6 },
+                data: { sqlAdd: sqlAdd7 },
                 type: "post",
                 success: function (out) {
+                    if (out == "successfully") {
+                        $("#bini").val("");
+                        $("#biniAge").val("");
+                        $("#biniSex").val("");
+                        sql = "SELECT `beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male` FROM `activ_bene` WHERE `activity_name`='" + activityName + "'";
+                        $.ajax({
+                            url: "../controlPanal/phpFile/show.php",
+                            data: { sql: sql },
+                            dataType: "json",
+                            type: "post",
+                            success: function (data) {
+                                ht = "<tr><th>إسم المستفيد</th> <th>عمر المستفيد</th> <th>جنس المستفيد</th> <th>التعديل</th> <th>الحذف</th></tr>";
+                                for (i = 0; i < data.length; i++) {
+                                    ht += "<tr><td>" + data[i].beneficiarie_name + "</td> <td>" + data[i].beneficiarie_age
+                                        + "</td> <td>" + data[i].beneficiarie_male
+                                        + "</td><td><button data-id=" + data[i].beneficiarie_name + "%" + data[i].beneficiarie_age + "%" + data[i].beneficiarie_male +
+                                        " class=\"edit-btn\">تعديل</button></td><td><button data-id=" + data[i].beneficiarie_name + "%" + data[i].beneficiarie_age + "%" + data[i].beneficiarie_male +
+                                        " class=\"remove-btn\">حذف</button></td></tr>";
+                                }
 
-                    sqlAdd7 = "INSERT INTO `activ_bene`(`activity_name`, `beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male`) VALUES" +
-                        " ('" + activityName + "','" + biniName + "','" + biniAge + "','" + biniSex + "')";
-
-                    $.ajax({
-                        url: "../controlPanal/phpFile/add.php",
-                        data: { sqlAdd: sqlAdd7 },
-                        type: "post",
-                        success: function (out) {
-                            if (out == "successfully") {
-                                $("#bini").val("");
-                                $("#biniAge").val("");
-                                $("#biniSex").val("");
-                                sql = "SELECT `beneficiarie_name`, `beneficiarie_age`, `beneficiarie_male` FROM `activ_bene` WHERE `activity_name`='" + activityName + "'";
-                                $.ajax({
-                                    url: "../controlPanal/phpFile/show.php",
-                                    data: { sql: sql },
-                                    dataType: "json",
-                                    type: "post",
-                                    success: function (data) {
-                                        ht = "<tr><th>إسم المستفيد</th> <th>عمر المستفيد</th> <th>جنس المستفيد</th> <th>التعديل</th> <th>الحذف</th></tr>";
-                                        for (i = 0; i < data.length; i++) {
-                                            ht += "<tr><td>" + data[i].beneficiarie_name + "</td> <td>" + data[i].beneficiarie_age
-                                                + "</td> <td>" + data[i].beneficiarie_male
-                                                + "</td><td><button data-id=" + data[i].beneficiarie_name + "%" + data[i].beneficiarie_age + "%" + data[i].beneficiarie_male +
-                                                " class=\"edit-btn\">تعديل</button></td><td><button data-id=" + data[i].beneficiarie_name + "%" + data[i].beneficiarie_age + "%" + data[i].beneficiarie_male +
-                                                " class=\"remove-btn\">حذف</button></td></tr>";
-                                        }
-
-                                        $("#biniTable").html(ht);
-                                    }
-                                });
-                                alert("تمت الاضافة");
-                            } else {
-                                alert(out);
+                                $("#biniTable").html(ht);
                             }
+                        });
+                        alert("تمت الاضافة");
+                    } else {
+                        alert(out);
+                    }
 
-                        }
-                    });
                 }
             });
+
 
         });
 
@@ -878,7 +869,6 @@ $(document).ready(function () {
     });
 
     $("#prev4").click(function () {
-        alert("asdasd");
         $("#hero5").toggle();
         $("#hero4").toggle();
     });
