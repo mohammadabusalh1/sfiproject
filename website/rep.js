@@ -26,12 +26,12 @@ $(document).ready(function () {
         $(".navbare").toggleClass("active");
         $(this).toggleClass("fa-times");
     });
-    
-    $("#search").keyup(function(){
+
+    $("#search").keyup(function () {
         value = $(this).val();
-        sql ="SELECT * FROM `activities` WHERE `activity_name` like '%"+value+"%' || `activity_date` like '%"+value+
-        "%' || `activity_Governorate` like '%"+value+"%' || `activity_area` like '%"+value+
-        "%' || `activity_type` like '%"+value+"%' || `activity_details` like '%"+value+"%' || `program_name` like '%"+value+"%'";
+        sql = "SELECT * FROM `activities` WHERE `activity_name` like '%" + value + "%' || `activity_date` like '%" + value +
+            "%' || `activity_Governorate` like '%" + value + "%' || `activity_area` like '%" + value +
+            "%' || `activity_type` like '%" + value + "%' || `activity_details` like '%" + value + "%' || `program_name` like '%" + value + "%'";
         reload(sql);
     });
 
@@ -39,8 +39,98 @@ $(document).ready(function () {
     $("table").on('click', '.click_btn', function () {
 
         id = $(this).data('id');
-        
+
     });
 
+    $("#name").prop("disabled", true);
+    $("#names").prop("disabled", true);
+    $("#date").prop("disabled", true);
+    $("#dates").prop("disabled", true);
+    $("#gov").prop("disabled", true);
+    $("#govs").prop("disabled", true);
+    $("#area").prop("disabled", true);
+    $("#areas").prop("disabled", true);
+    $("#type").prop("disabled", true);
+    $("#types").prop("disabled", true);
+    $("#program").prop("disabled", true);
+    $("#programs").prop("disabled", true);
+    $("#project").prop("disabled", true);
+    $("#projects").prop("disabled", true)
+
+    $("#cb_name").click(function () {
+        if ($(this).prop("checked")) {
+            $("#name").prop("disabled", false);
+            $("#names").prop("disabled", false);
+        } else {
+            $("#name").prop("disabled", true);
+            $("#names").prop("disabled", true);
+        }
+    });
+
+    $("#cb_date").click(function () {
+        if ($(this).prop("checked")) {
+            $("#date").prop("disabled", false);
+            $("#dates").prop("disabled", false);
+        } else {
+            $("#date").prop("disabled", true);
+            $("#dates").prop("disabled", true);
+        }
+    });
+
+    $("#cb_gov").click(function () {
+        if ($(this).prop("checked")) {
+            $("#gov").prop("disabled", false);
+            $("#govs").prop("disabled", false);
+        } else {
+            $("#gov").prop("disabled", true);
+            $("#govs").prop("disabled", true);
+        }
+    });
+
+    $("#cb_area").click(function () {
+        if ($(this).prop("checked")) {
+            $("#area").prop("disabled", false);
+            $("#areas").prop("disabled", false);
+        } else {
+            $("#area").prop("disabled", true);
+            $("#areas").prop("disabled", true);
+        }
+    });
+
+    $("#cb_type").click(function () {
+        if ($(this).prop("checked")) {
+            $("#type").prop("disabled", false);
+            $("#types").prop("disabled", false);
+        } else {
+            $("#type").prop("disabled", true);
+            $("#types").prop("disabled", true);
+        }
+    });
+
+    $("#cb_program").click(function () {
+        if ($(this).prop("checked")) {
+            $("#program").prop("disabled", false);
+            $("#programs").prop("disabled", false);
+        } else {
+            $("#program").prop("disabled", true);
+            $("#programs").prop("disabled", true);
+        }
+    });
+
+    $("#cd_project").click(function () {
+        if ($(this).prop("checked")) {
+            $("#project").prop("disabled", false);
+            $("#projects").prop("disabled", false);
+        } else {
+            $("#project").prop("disabled", true);
+            $("#projects").prop("disabled", true);
+        }
+    });
+
+
+    $("#next").click(function () {
+        $("#attribute").toggle();
+        $("#filter").toggle();
+    });
 
 });

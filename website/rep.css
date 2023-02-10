@@ -152,6 +152,7 @@ td {
     justify-content: center;
     align-items: center;
     margin: 40px;
+    overflow-x: auto;
 }
 
 #search {
@@ -165,18 +166,52 @@ td {
     padding: var(--padding2);
 }
 
+#filter h2 {
+    padding-bottom: 40px;
+}
+
 .fill{
     margin: 24px 0px;
 }
 
-.fill input{
-    margin: 0 12px;
+.fill select{
+    display: block;
+    width: 331px;
+    text-indent: 24px;
 }
 
 .in2{
-    width: 50%;
+    width: 312px;
+    display: block;
+    margin: 8px 0;
+    padding: 0 8px;
+}
+
+.app{
     display: block;
 }
+
+.chick{
+    margin-left: 4px;
+}
+
+.bt_next{
+    width: 331px;
+}
+
+#attribute{
+padding: var(--padding2);
+display: none;
+}
+
+#attribute h2{
+    padding-bottom: 40px;
+}
+
+#attribute button{
+   margin-top: 24px;
+}
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;

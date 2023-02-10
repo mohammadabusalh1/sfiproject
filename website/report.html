@@ -54,18 +54,64 @@
 
     <section id="filter">
 
+        <h2>إبحث بإستخاد الخصائص</h2>
+
         <div class="fill">
-            <input type="checkbox">إسم النشاط <input type="text" class="in2" name="name" id="name">
+            <input type="checkbox" id="cb_name" class="chick">إسم النشاط
+            <input type="text" class="in2" name="name" id="name" placeholder="#بحث">
+            <select name="names" id="names"></select>
         </div>
         <div class="fill">
-            <input type="checkbox">تاريخ النشاط <input type="date" class="in2" name="date" id="date">
+            <input type="checkbox" id="cb_date" class="chick">تاريخ النشاط
+            <input type="date" class="in2" name="date" id="date" placeholder="#بحث">
         </div>
-        <div class="fill"> <input type="checkbox"> المحافظة <input type="text" class="in2" name="gov" id="gov"></div>
-        <div class="fill"> <input type="checkbox"> المنطقة <input type="text" class="in2" name="area" id="area"></div>
-        <div class="fill"> <input type="checkbox"> النوع <input type="text" class="in2" name="type" id="type"></div>
-        <div class="fill"> <input type="checkbox"> التفاصيل <input type="text" class="in2" name="det" id="det"></div>
-        <div class="fill"> <input type="checkbox"> البرنامج <input type="text" class="in2" name="program" id="program"></div>
-        <div class="fill"> <input type="checkbox"> المشروع <input type="text" class="in2" name="project" id="project"></div>
+        <div class="fill">
+            <input type="checkbox" id="cb_gov" class="chick"> المحافظة
+            <input type="text" class="in2" name="gov" id="gov" placeholder="#بحث">
+            <select name="govs" id="govs"></select>
+        </div>
+        <div class="fill">
+            <input type="checkbox" id="cb_area" class="chick"> المنطقة
+            <input type="text" class="in2" name="area" id="area" placeholder="#بحث">
+            <select name="areas" id="areas"></select>
+        </div>
+        <div class="fill">
+            <input type="checkbox" id="cb_type" class="chick"> النوع
+            <input type="text" class="in2" name="type" id="type" placeholder="#بحث">
+            <select name="types" id="types"></select>
+        </div>
+
+        <div class="fill">
+            <input type="checkbox" id="cb_program" class="chick"> البرنامج
+            <input type="text" class="in2" name="program" id="program" placeholder="#بحث">
+            <select name="programs" id="programs"></select>
+        </div>
+        <div class="fill">
+            <input type="checkbox" id="cd_project" class="chick"> المشروع
+            <input type="text" class="in2" name="project" id="project" placeholder="#بحث">
+            <select name="projects" id="projects"></select>
+        </div>
+
+        <button id="next" class="bt_next">التالي</button>
+    </section>
+
+    <section id="attribute">
+        <h2>إختر محتويات التقرير</h2>
+        <input type="checkbox" id="cb_chall" class="chick"> التحديات<br>
+        <input type="checkbox" id="cb_links" class="chick">الروابط <br>
+        <input type="checkbox" id="cb_num_bini" class="chick">عدد المستفيدين<br>
+        <input type="checkbox" id="cb_bini_meale_num" class="chick">عدد المستفيدين الذكور<br>
+        <input type="checkbox" id="cb_nini_fmeale_num" class="chick"> عدد المستفيدين الاناث<br>
+        <input type="checkbox" id="cb_bini_name" class="chick"> أسماء المستفيدين<br>
+        <input type="checkbox" id="cb_att" class="chick"> المرفقات<br>
+        <input type="checkbox" id="cb_emp_num" class="chick">عدد الموظفين المشاركين<br>
+        <input type="checkbox" id="cb_emp_name" class="chick">أسماء الموظفين<br>
+        <input type="checkbox" id="cb_parti_num" class="chick">عدد المشاركين<br>
+        <input type="checkbox" id="cb_parti_name" class="chick">أسماء المشاركين<br>
+        <input type="checkbox" id="cb_target" class="chick">الفئة المستهدفة<br>
+        <input type="checkbox" id="cb_area" class="chick">المناطق المستهدفة<br>
+        <input type="checkbox" id="cb_goles" class="chick">الاهداف<br>
+        <button id="show_report" class="bt_next">أظهر التقرير</button>
     </section>
 
     <!-- start footer -->
