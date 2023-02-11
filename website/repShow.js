@@ -1,0 +1,273 @@
+$(document).ready(function () {
+    var name = localStorage.getItem('name');
+
+    $("#activityName").text(name);
+
+
+    sql = "SELECT * FROM `activities` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+
+            for (i = 0; i < data.length; i++) {
+
+                ht = '<tr> <th>التاريخ</th> <td>' + data[i].activity_date + '</td> <th>الاهداف</th> </tr> <tr> <th>المحافظة</th> <td>' + data[i].activity_Governorate + '</td> ' +
+                    '<td rowspan="6" id="goals"></td> </tr> <tr> <th>المشروع</th> ' +
+                    '<td id ="projectName">' + data[i].project_name + '</td> </tr> <tr> <th>البرنامج</th> <td>' + data[i].program_name +
+                    '</td> </tr> <tr> <th>المنطقة</th> <td>' + data[i].activity_area + '</td> ' +
+                    '</tr> <tr> <th>النوع</th> <td>' + data[i].activity_type + '</td> </tr> <tr> <th>التفاصيل</th> <td>' + data[i].activity_details + '</td> </tr>';
+                $("#main_table").html(ht);
+
+                sql1 = "SELECT * FROM `goal_pro` WHERE `project_name`='" + data[i].project_name + "'";
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql1 },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data1) {
+                        ht = "";
+                        for (i = 0; i < data1.length; i++) {
+                            ht += data1[i].goal_name + '<br><br>';
+                        }
+                        $("#goals").html(ht);
+                    }
+                });
+            }
+
+        }
+    });
+
+    sql = "SELECT * FROM `activ_chall` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            ht = "<tr><th>التحديات</th></tr>";
+            for (i = 0; i < data.length; i++) {
+                ht += '<tr><td>' + data[i].challenge_id + '</td></tr>';
+            }
+            $("#chall_table").html(ht);
+
+        }
+    });
+
+    sql = "SELECT * FROM `links` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            ht = "<tr><th>الروابط</th></tr>";
+            for (i = 0; i < data.length; i++) {
+                ht += '<tr> <td><a href="' + data[i].link + '">>' + data[i].link + '</a></td> </tr>';
+            }
+            $("#links_table").html(ht);
+
+        }
+    });
+
+    function relodImage() {
+        $.ajax({
+            url: 'php/getImg.php',
+            data: { activityName: name },
+            type: 'POST',
+            success: function (out) {
+                if (out != "Image not found") {
+                    $("#att_table").html(out);
+                } else {
+                    alert(out);
+                }
+            }
+        });
+    }
+    relodImage();
+
+    sql = "SELECT * FROM `act_emp` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            for (i = 0; i < data.length; i++) {
+
+                sql1 = "SELECT * FROM `employees` WHERE `emp_id`='" + data[i].emp_id + "'";
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql1 },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data1) {
+                        ht = "<tr><th>الموظفين</th></tr>";
+                        for (i = 0; i < data1.length; i++) {
+                            ht += '<tr><td>' + data1[i].emp_name + '</td></tr>';
+                        }
+                        $("#emp_table").html(ht);
+                    }
+                });
+
+            }
+        }
+    });
+
+
+    sql = "SELECT * FROM `act_part` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            ht12 = "<tr> <th colspan=\"2\">المشاركين</th> </tr>";
+            for (i = 0; i < data.length; i++) {
+                sql1 = "SELECT * FROM `participants` WHERE `participants_name`='" + data[i].participant_name + "'";
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql1 },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data1) {
+                        for (j = 0; j < data1.length; j++) {
+                            ht12 += '<tr><td> ' + data1[j].participants_name + '</td><td>' + data1[j].nickname + '</td></tr>';
+                            ht12 += "<tr><td colspan=\"2\"> العدد الكلي: " + data.length + "</td><tr>";
+                            $("#parti_table").html(ht12);
+                        }
+                    }
+                });
+
+            }
+
+        }
+    });
+
+
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+
+    sql = "SELECT * FROM `activ_bene` WHERE `activity_name`='" + name + "' && `beneficiarie_male`='ذكر'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            meale = data.length;
+
+            sql = "SELECT * FROM `activ_bene` WHERE `activity_name`='" + name + "' && `beneficiarie_male`='انثى'";
+            $.ajax({
+                url: "../controlPanal/phpFile/show.php",
+                data: { sql: sql },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    female = data.length;
+
+                    var data = {
+                        labels: ["الذكور", "الاناث"],
+                        datasets: [
+                            {
+                                data: [meale, female], //  Males: 10, Females: 20
+                                backgroundColor: [
+                                    "#36A2EB",
+                                    "#FFCE56"
+                                ],
+                                hoverBackgroundColor: [
+                                    "#36A2EB",
+                                    "#FFCE56"
+                                ]
+                            }]
+                    };
+
+                    // Create the chart using the chart.js library
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: data
+                    });
+
+                }
+            });
+        }
+    });
+
+
+    sql = "SELECT * FROM `activities` WHERE `activity_name`='" + name + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+
+            for (i = 0; i < data.length; i++) {
+
+                project_name = data[i].project_name;
+
+
+                sql = "SELECT * FROM `targ_pro` WHERE `project_name`='" + project_name + "'";
+                $.ajax({
+                    url: "../controlPanal/phpFile/show.php",
+                    data: { sql: sql },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+
+                        // Get the context of the canvas element we want to select
+                        var ctx1 = document.getElementById("myChart1").getContext("2d");
+
+                        targets = new Array();
+                        dataTar = new Array();
+
+                        for(i=0;i<data.length;i++){
+                            targets[i] = data[i].target_group;
+                            dataTar[i] =1;
+                        }
+
+                        // Set the data for the graph
+                        var data = {
+                            labels: targets,
+                            datasets: [
+                                {
+                                    data: dataTar, // Total Beneficiaries: 30, Males: 10, Females: 20
+                                    backgroundColor: [
+                                        "#FF6384",
+                                        "#36A2EB",
+                                        "#FFCE56"
+                                    ],
+                                    hoverBackgroundColor: [
+                                        "#FF6384",
+                                        "#36A2EB",
+                                        "#FFCE56"
+                                    ]
+                                }]
+                        };
+
+                        // Create the chart using the chart.js library
+                        var myPieChart = new Chart(ctx1, {
+                            type: 'pie',
+                            data: data
+                        });
+
+                    }
+                });
+
+
+
+            }
+
+        }
+    });
+
+
+
+
+});
+
+
+

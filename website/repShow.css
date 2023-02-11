@@ -127,7 +127,7 @@ th,
 td {
     border: 1px solid #C58940;
     border-collapse: collapse;
-    padding: 24px;
+    padding: 14px;
 }
 
 th {
@@ -154,7 +154,17 @@ table{
     margin-top: 32px;
 }
 
-#chart{
-    width:75%;
-    margin-top: 32px;
+#charts{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 48px 0;
+}
+
+.chart{
+    width:50%;
+    text-align: center;
+}
+
+#att_table td:nth-child(2),#att_table th:nth-child(2){
+    display: none;
 }

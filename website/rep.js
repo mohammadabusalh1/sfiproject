@@ -37,9 +37,9 @@ $(document).ready(function () {
 
 
     $("table").on('click', '.click_btn', function () {
-
         id = $(this).data('id');
-
+        localStorage.setItem('name', id);
+        window.location.replace("showReport.html");
     });
 
     $("#name").prop("disabled", true);

@@ -12,8 +12,8 @@ if (isset($_POST["activityName"])) {
     $ht = '
     <table id="imageTable">  
      <tr>
-      <th width="70%">Image</th>
-      <th width="10%">Remove</th>
+      <th width="70%">الصورة</th>
+      <th width="10%">حذف</th>
      </tr>
    ';
     if (mysqli_num_rows($result) > 0) {
