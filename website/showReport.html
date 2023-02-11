@@ -19,7 +19,7 @@
 
 <body dir="rtl">
 
-  <section id="main">
+  <section id="main" style="display: none;">
     <br><br>
     <h2 id="activityName">Activity Name</h2><br>
 
@@ -48,18 +48,29 @@
 
       <div id="charts">
 
-        <div class="chart">
+        <div class="chart" id="ch1">
           <h6>المستفيدين</h6>
           <canvas id="myChart"></canvas>
         </div>
 
-        <div class="chart">
+        <div class="chart" id="ch2">
           <h6>الفئات المستهدفة</h6>
           <canvas id="myChart1"></canvas>
         </div>
       </div>
 
     </div>
+  </section>
+
+  <section id="tableShow" style="display: none;">
+    <h2>إختر نشاط</h2>
+
+    <input type="text" name="search" id="search" placeholder="# البحث">
+
+    <table class="table" id="table">
+
+    </table>
+
   </section>
 
 

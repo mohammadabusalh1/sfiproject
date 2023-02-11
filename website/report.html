@@ -63,22 +63,33 @@
         </div>
         <div class="fill">
             <input type="checkbox" id="cb_date" class="chick">تاريخ النشاط
-            <input type="date" class="in2" name="date" id="date" placeholder="#بحث">
+            <input type="date" class="in2" name="date" id="date">
+            <input type="date" class="in2" name="date1" id="date1">
         </div>
         <div class="fill">
             <input type="checkbox" id="cb_gov" class="chick"> المحافظة
-            <input type="text" class="in2" name="gov" id="gov" placeholder="#بحث">
-            <select name="govs" id="govs"></select>
+            <select name="govs" id="govs">
+                <option value="بيت لحم">بيت لحم</option>
+                <option value="رام الله و البيرة">رام الله والبيرة</option>
+                <option value="الخليل">الخليل</option>
+                <option value="نابلس">نابلس</option>
+                <option value="سلفيت">سلفيت</option>
+                <option value="قلقيلية">قلقيلية</option>
+                <option value="طولكرم">طولكرم</option>
+                <option value="طوباس">طوباس</option>
+                <option value="جنين">جنين</option>
+                <option value="أريحا و اأغوار"> أريحا والأغوار</option>
+                <option value="القدس">القدس</option>
+
+            </select>
         </div>
         <div class="fill">
             <input type="checkbox" id="cb_area" class="chick"> المنطقة
-            <input type="text" class="in2" name="area" id="area" placeholder="#بحث">
-            <select name="areas" id="areas"></select>
+            <input type="text" class="in2" name="areas" id="areas">
         </div>
         <div class="fill">
             <input type="checkbox" id="cb_type" class="chick"> النوع
-            <input type="text" class="in2" name="type" id="type" placeholder="#بحث">
-            <select name="types" id="types"></select>
+            <input type="text" class="in2" name="types" id="types" placeholder="#بحث">
         </div>
 
         <div class="fill">
@@ -99,19 +110,13 @@
         <h2>إختر محتويات التقرير</h2>
         <input type="checkbox" id="cb_chall" class="chick"> التحديات<br>
         <input type="checkbox" id="cb_links" class="chick">الروابط <br>
-        <input type="checkbox" id="cb_num_bini" class="chick">عدد المستفيدين<br>
-        <input type="checkbox" id="cb_bini_meale_num" class="chick">عدد المستفيدين الذكور<br>
-        <input type="checkbox" id="cb_nini_fmeale_num" class="chick"> عدد المستفيدين الاناث<br>
-        <input type="checkbox" id="cb_bini_name" class="chick"> أسماء المستفيدين<br>
+        <input type="checkbox" id="cb_num_bini" class="chick">معلومات المستفيدين<br>
         <input type="checkbox" id="cb_att" class="chick"> المرفقات<br>
-        <input type="checkbox" id="cb_emp_num" class="chick">عدد الموظفين المشاركين<br>
-        <input type="checkbox" id="cb_emp_name" class="chick">أسماء الموظفين<br>
-        <input type="checkbox" id="cb_parti_num" class="chick">عدد المشاركين<br>
-        <input type="checkbox" id="cb_parti_name" class="chick">أسماء المشاركين<br>
+        <input type="checkbox" id="cb_emp_name" class="chick">معلومات الموظفين<br>
+        <input type="checkbox" id="cb_parti_num" class="chick">معلومات المشاركين<br>
         <input type="checkbox" id="cb_target" class="chick">الفئة المستهدفة<br>
-        <input type="checkbox" id="cb_area" class="chick">المناطق المستهدفة<br>
         <input type="checkbox" id="cb_goles" class="chick">الاهداف<br>
-        <button id="show_report" class="bt_next">أظهر التقرير</button>
+        <button id="show_report" class="bt_next">أظهر النشاطات</button>
     </section>
 
     <!-- start footer -->

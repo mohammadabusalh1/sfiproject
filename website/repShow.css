@@ -168,3 +168,12 @@ table{
 #att_table td:nth-child(2),#att_table th:nth-child(2){
     display: none;
 }
+
+#tableShow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    overflow-x: auto;
+}

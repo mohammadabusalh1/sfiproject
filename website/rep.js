@@ -39,13 +39,22 @@ $(document).ready(function () {
     $("table").on('click', '.click_btn', function () {
         id = $(this).data('id');
         localStorage.setItem('name', id);
-        window.location.replace("showReport.html");
+        localStorage.removeItem("sql");
+        localStorage.removeItem('chall');
+        localStorage.removeItem('links');
+        localStorage.removeItem('bini_info');
+        localStorage.removeItem('att');
+        localStorage.removeItem('emp_info');
+        localStorage.removeItem('parti_info');
+        localStorage.removeItem('targt');
+        localStorage.removeItem('goale');
+        window.open("showReport.html", "_blank");
     });
 
     $("#name").prop("disabled", true);
     $("#names").prop("disabled", true);
     $("#date").prop("disabled", true);
-    $("#dates").prop("disabled", true);
+    $("#date1").prop("disabled", true);
     $("#gov").prop("disabled", true);
     $("#govs").prop("disabled", true);
     $("#area").prop("disabled", true);
@@ -70,10 +79,10 @@ $(document).ready(function () {
     $("#cb_date").click(function () {
         if ($(this).prop("checked")) {
             $("#date").prop("disabled", false);
-            $("#dates").prop("disabled", false);
+            $("#date1").prop("disabled", false);
         } else {
             $("#date").prop("disabled", true);
-            $("#dates").prop("disabled", true);
+            $("#date1").prop("disabled", true);
         }
     });
 
@@ -127,10 +136,208 @@ $(document).ready(function () {
         }
     });
 
+    let sql = "SELECT `activity_name` FROM `activities`";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            let options = "";
+            for (i = 0; i < data.length; i++) {
+                options += '<option value="' + data[i].activity_name + '">' + data[i].activity_name + '</option>';
+                $("#names").html(options);
+            }
+        }
+    });
+
+    $("#name").keyup(function () {
+        let searchValue = $(this).val();
+
+        let sql = "SELECT `activity_name` FROM `activities` WHERE `activity_name` like '" + searchValue + "%'";
+        $.ajax({
+            url: "../controlPanal/phpFile/show.php",
+            data: { sql: sql },
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                options = "";
+                for (i = 0; i < data.length; i++) {
+                    options += '<option value="' + data[i].activity_name + '">' + data[i].activity_name + '</option>';
+                    $("#names").html(options);
+                }
+            }
+        });
+    });
+
+
+    let sql2 = "SELECT `program_name` FROM `programs`";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql2 },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            let options = "";
+            for (i = 0; i < data.length; i++) {
+                options += '<option value="' + data[i].program_name + '">' + data[i].program_name + '</option>';
+                $("#programs").html(options);
+            }
+        }
+    });
+
+    $("#program").keyup(function () {
+        let searchValue = $(this).val();
+
+        let sql = "SELECT `program_name` FROM `programs` WHERE `program_name` like '" + searchValue + "%'";
+        $.ajax({
+            url: "../controlPanal/phpFile/show.php",
+            data: { sql: sql },
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                options = "";
+                for (i = 0; i < data.length; i++) {
+                    options += '<option value="' + data[i].program_name + '">' + data[i].program_name + '</option>';
+                    $("#programs").html(options);
+                }
+            }
+        });
+    });
+
+
+    let sql3 = "SELECT `project_name` FROM `project`";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql3 },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            let options = "";
+            for (i = 0; i < data.length; i++) {
+                options += '<option value="' + data[i].project_name + '">' + data[i].project_name + '</option>';
+                $("#projects").html(options);
+            }
+        }
+    });
+
+    $("#project").keyup(function () {
+        let searchValue = $(this).val();
+
+        let sql = "SELECT `project_name` FROM `project` WHERE `project_name` like '" + searchValue + "%'";
+        $.ajax({
+            url: "../controlPanal/phpFile/show.php",
+            data: { sql: sql },
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                options = "";
+                for (i = 0; i < data.length; i++) {
+                    options += '<option value="' + data[i].project_name + '">' + data[i].project_name + '</option>';
+                    $("#projects").html(options);
+                }
+            }
+        });
+    });
+
+
 
     $("#next").click(function () {
         $("#attribute").toggle();
         $("#filter").toggle();
+
+        var nameValue = $("#names").val();
+        var dateValue = $("#date").val();
+        var dateValue1 = $("#date1").val()
+        var govValue = $("#govs").val();
+        var areaValue = $("#areas").val();
+        var typeValue = $("#types").val();
+        var programValue = $("#programs").val();
+        var projectValue = $("#projects").val();
+
+        $("#show_report").click(function () {
+
+            var inputValues = [];
+            $("#attribute input[type='checkbox']").each(function () {
+                inputValues.push($(this).is(":checked"));
+            });
+
+            let query = "SELECT *";
+
+            localStorage.removeItem('chall');
+            localStorage.removeItem('links');
+            localStorage.removeItem('bini_info');
+            localStorage.removeItem('att');
+            localStorage.removeItem('emp_info');
+            localStorage.removeItem('parti_info');
+            localStorage.removeItem('targt');
+            localStorage.removeItem('goale');
+
+            localStorage.setItem('chall', 0);
+            localStorage.setItem('links', 0);
+            localStorage.setItem('bini_info', 0);
+            localStorage.setItem('att', 0);
+            localStorage.setItem('emp_info', 0);
+            localStorage.setItem('parti_info', 0);
+            localStorage.setItem('targt', 0);
+            localStorage.setItem('goale', 0);
+
+            if (inputValues[0]) {
+                localStorage.setItem('chall', 1);
+            }
+            if (inputValues[1]) {
+                localStorage.setItem('links', 1);
+            }
+            if (inputValues[2]) {
+                localStorage.setItem('bini_info', 1);
+            }
+            if (inputValues[3]) {
+                localStorage.setItem('att', 1);
+            }
+            if (inputValues[4]) {
+                localStorage.setItem('emp_info', 1);
+            }
+            if (inputValues[5]) {
+                localStorage.setItem('parti_info', 1);
+            }
+            if (inputValues[6]) {
+                localStorage.setItem('targt', 1);
+            }
+            if (inputValues[8]) {
+                localStorage.setItem('goale', 1);
+            }
+
+
+            query += " FROM activities WHERE 1";
+            if (nameValue != "" && $("#cb_name").is(":checked")) {
+                query += " AND activity_name like '%" + nameValue + "%'";
+            }
+            if (dateValue != "" && dateValue1 != "" && $("#cb_date").is(":checked")) {
+                query += " AND activity_date BETWEEN '"+dateValue+"' AND '"+dateValue1+"'";
+            }
+            if (govValue != "" && $("#cb_gov").is(":checked")) {
+                query += " AND activity_Governorate = '" + govValue + "'";
+            }
+            if (areaValue != "" && $("#cb_area").is(":checked")) {
+                query += " AND activity_area = '" + areaValue + "'";
+            }
+            if (typeValue != "" && $("#cb_type").is(":checked")) {
+                query += " AND activity_type = '" + typeValue + "'";
+            }
+            if (programValue != "" && $("#cb_program").is(":checked")) {
+                query += " AND program_name = '" + programValue + "'";
+            }
+            if (projectValue != "" && $("#cd_project").is(":checked")) {
+                query += " AND project_name = '" + projectValue + "'";
+            }
+
+            localStorage.setItem('sql', query);
+            localStorage.removeItem('name');
+            alert(query);
+            window.open("showReport.html", "_blank");
+        });
+
+
     });
 
 });
