@@ -405,6 +405,9 @@
 
     <script>
         $(document).ready(function () {
+            if(localStorage.getItem('login')==0 || localStorage.getItem('login')== null){
+                window.location.replace("../login.html");
+            }
             $("#nav i").click(function () {
                 $("#smallList").toggle(300);
             });
@@ -427,13 +430,10 @@
                 window.location.replace("parti.html");
             });
             $(".card:nth-child(4)").click(function () {
-                window.location.replace("activ.html");
+                window.location.replace("nickname.html");
             });
             $(".card:nth-child(5)").click(function () {
                 window.location.replace("programs.html");
-            });
-            $(".card:nth-child(6)").click(function () {
-                window.location.replace("nickname.html");
             });
         });
     </script>

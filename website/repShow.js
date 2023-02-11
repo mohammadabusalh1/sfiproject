@@ -1,6 +1,11 @@
 $(document).ready(function () {
 
 
+    if (localStorage.getItem('login') == 0 || localStorage.getItem('login') == null) {
+        window.location.replace("../login.html");
+    }
+
+
     var name = localStorage.getItem('name');
     if (name != null) {
         $("#main").css("display", "flex");
@@ -22,7 +27,7 @@ $(document).ready(function () {
         }
 
         var att = localStorage.getItem('att');
-        if ( att != null && att == 0) {
+        if (att != null && att == 0) {
             $("#att_table").toggle();
         }
 
@@ -41,7 +46,7 @@ $(document).ready(function () {
             $("#ch2").toggle();
         }
 
-        sql = "SELECT * FROM `activities` WHERE `activity_name`='" + name + "'";
+        let sql = "SELECT * FROM `activities` WHERE `activity_name`='" + name + "'";
         $.ajax({
             url: "../controlPanal/phpFile/show.php",
             data: { sql: sql },
@@ -75,7 +80,7 @@ $(document).ready(function () {
                                 $("#goals").toggle();
                                 $("#goaleTitle").toggle();
                             }
-                    
+
                         }
                     });
                 }
@@ -83,18 +88,31 @@ $(document).ready(function () {
             }
         });
 
-        sql = "SELECT * FROM `activ_chall` WHERE `activity_name`='" + name + "'";
+        let sql10 = "SELECT * FROM `activ_chall` WHERE `activity_name`='" + name + "'";
         $.ajax({
             url: "../controlPanal/phpFile/show.php",
-            data: { sql: sql },
+            data: { sql: sql10 },
             dataType: "json",
             type: "post",
             success: function (data) {
-                ht = "<tr><th>التحديات</th></tr>";
+               let ht = "<tr><th>التحديات</th></tr>";
                 for (i = 0; i < data.length; i++) {
-                    ht += '<tr><td>' + data[i].challenge_id + '</td></tr>';
+
+                   let sql1 = "SELECT * FROM `challenges` WHERE `challenge_id`='" + data[i].challenge_id + "'";
+                    $.ajax({
+                        url: "../controlPanal/phpFile/show.php",
+                        data: { sql: sql1 },
+                        dataType: "json",
+                        type: "post",
+                        success: function (data1) {
+                            for (i = 0; i < data1.length; i++) {
+                                ht += '<tr><td>' + data1[i].challenge + '</td></tr>';
+                            }
+                            $("#chall_table").html(ht);
+                        }
+                    });
+
                 }
-                $("#chall_table").html(ht);
 
             }
         });
@@ -108,7 +126,7 @@ $(document).ready(function () {
             success: function (data) {
                 ht = "<tr><th>الروابط</th></tr>";
                 for (i = 0; i < data.length; i++) {
-                    ht += '<tr> <td><a href="' + data[i].link + '">>' + data[i].link + '</a></td> </tr>';
+                    ht += '<tr> <td><a target="_blank" href="' + data[i].link + '">' + data[i].link + '</a></td> </tr>';
                 }
                 $("#links_table").html(ht);
 
@@ -160,6 +178,8 @@ $(document).ready(function () {
         });
 
 
+        let hty = "<tr> <th colspan=\"2\">المشاركين</th> </tr>";
+        let dataLen =0;
         sql = "SELECT * FROM `act_part` WHERE `activity_name`='" + name + "'";
         $.ajax({
             url: "../controlPanal/phpFile/show.php",
@@ -167,7 +187,7 @@ $(document).ready(function () {
             dataType: "json",
             type: "post",
             success: function (data) {
-                ht12 = "<tr> <th colspan=\"2\">المشاركين</th> </tr>";
+                let s=0;
                 for (i = 0; i < data.length; i++) {
                     sql1 = "SELECT * FROM `participants` WHERE `participants_name`='" + data[i].participant_name + "'";
                     $.ajax({
@@ -177,14 +197,21 @@ $(document).ready(function () {
                         type: "post",
                         success: function (data1) {
                             for (j = 0; j < data1.length; j++) {
-                                ht12 += '<tr><td> ' + data1[j].participants_name + '</td><td>' + data1[j].nickname + '</td></tr>';
-                                ht12 += "<tr><td colspan=\"2\"> العدد الكلي: " + data.length + "</td><tr>";
-                                $("#parti_table").html(ht12);
+                                hty += '<tr><td> ' + data1[j].participants_name + '</td><td>' + data1[j].nickname + '</td></tr>';
+                                dataLen= data.length;
+                                if(s == data.length-1){
+                                    hty += "<tr><td colspan=\"2\"> العدد الكلي: " + dataLen + "</td><tr>";
+                                    $("#parti_table").html(hty);
+                                }else{
+                                    s++;
+                                }
                             }
                         }
                     });
-
                 }
+                
+    
+
 
             }
         });
@@ -304,6 +331,7 @@ $(document).ready(function () {
 
             }
         });
+
 
     } else {
 

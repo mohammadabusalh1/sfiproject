@@ -361,6 +361,11 @@
 <body dir="rtl">
 
     <script>
+        $(document).ready(function(){
+            if(localStorage.getItem('login')==0 || localStorage.getItem('login')== null){
+                window.location.replace("../login.html");
+            }
+        });
         function reload(sql) {
             $.ajax({
                 url: "phpFile/show.php",
@@ -371,7 +376,7 @@
                     ht = "<tr> <th>المسمى</th> <th>حذف</th></tr>";
                     for (i = 0; i < data.length; i++) {
                         ht += "<tr><td>" + data[i].nickname + "<td><button data-id=" + 
-                            data[i].nickname + " class=\"remove-btn\">حذف</button></td>";
+                            data[i].nickname + " class=\"remove-btn\">حذف <i class=\"fa fa-remove\"></i></button></td>";
                     }
                     $(".table").html(ht);
                 }

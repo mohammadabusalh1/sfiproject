@@ -20,6 +20,11 @@ $(document).ready(function () {
         });
     }
 
+    if (localStorage.getItem('login') == 0 || localStorage.getItem('login') == null) {
+        window.location.replace("../login.html");
+    }
+
+
     reload("SELECT * FROM `activities`");
 
     $("#bar").click(function () {
@@ -303,7 +308,7 @@ $(document).ready(function () {
             if (inputValues[6]) {
                 localStorage.setItem('targt', 1);
             }
-            if (inputValues[8]) {
+            if (inputValues[7]) {
                 localStorage.setItem('goale', 1);
             }
 
@@ -313,7 +318,7 @@ $(document).ready(function () {
                 query += " AND activity_name like '%" + nameValue + "%'";
             }
             if (dateValue != "" && dateValue1 != "" && $("#cb_date").is(":checked")) {
-                query += " AND activity_date BETWEEN '"+dateValue+"' AND '"+dateValue1+"'";
+                query += " AND activity_date BETWEEN '" + dateValue + "' AND '" + dateValue1 + "'";
             }
             if (govValue != "" && $("#cb_gov").is(":checked")) {
                 query += " AND activity_Governorate = '" + govValue + "'";
@@ -333,7 +338,6 @@ $(document).ready(function () {
 
             localStorage.setItem('sql', query);
             localStorage.removeItem('name');
-            alert(query);
             window.open("showReport.html", "_blank");
         });
 

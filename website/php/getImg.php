@@ -12,7 +12,7 @@ if (isset($_POST["activityName"])) {
     $ht = '
     <table id="imageTable">  
      <tr>
-      <th width="70%">الصورة</th>
+      <th width="70%">صور</th>
       <th width="10%">حذف</th>
      </tr>
    ';

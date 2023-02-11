@@ -134,6 +134,14 @@ th {
     background-color: #E5BA73;
 }
 
+td{
+    overflow-x: auto;
+}
+
+table a{
+    display: block;
+    width: 150px;
+}
 tr:nth-child(even) {
     background-color: #FAF8F1;
 }
