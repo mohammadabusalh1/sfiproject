@@ -52,6 +52,13 @@ button {
     cursor: pointer;
 }
 
+button:hover{
+    opacity: 0.9;
+}
+.active{
+    color: var(--main-color);
+}
+
 #header {
     display: flex;
     flex-direction: row;

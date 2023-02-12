@@ -40,6 +40,11 @@ h6 {
     font-size: 18px;
 }
 
+.active {
+    color: var(--main-color);
+}
+
+
 button {
     padding: 4px 25px;
     background-color: var(--main-color);
@@ -49,6 +54,10 @@ button {
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 
 #header {
@@ -79,9 +88,15 @@ button {
 }
 
 
-i {
+#logout i {
     font-size: 26px;
     color: var(--main-color);
+}
+
+#tableShow i {
+    font-size: 18px;
+    margin-right: 8px;
+    padding: 8px 0px;
 }
 
 #bar {
@@ -205,7 +220,7 @@ footer #box_cont .box h4 {
     padding: 4px 12px;
 }
 
-.hero{
+.hero {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -214,35 +229,42 @@ footer #box_cont .box h4 {
     width: 80%;
 }
 
-.hero .inf{
-width: 100%;
+.hero .inf {
+    width: 100%;
 }
 
-#next,#next2,#next3,#next4{
-width: 50%;
-margin: 24px 0;
+#next,
+#next2,
+#next3,
+#next4 {
+    width: 50%;
+    margin: 24px 0;
 }
 
-.add2{
+.add2 {
     width: auto;
     margin: 2px 0 24px 0;
-    display: block; 
+    display: block;
 }
 
-.hero .inf input,.hero .inf select,textarea{
+.hero .inf input,
+.hero .inf select,
+textarea {
     width: 50%;
     margin-bottom: 12px;
 }
 
-#he2,#he3,#he4{
+#he2,
+#he3,
+#he4 {
     display: none;
 }
 
-#file{
+#file {
     border: 1px solid rgb(0, 0, 0, 0.5);
 }
 
-#table{
+#table {
     text-align: center;
 }
 
@@ -284,10 +306,10 @@ td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-x:auto;
+    overflow-x: auto;
 }
 
-.hero .inf select{
+.hero .inf select {
     width: 50.5%;
 }
 
@@ -304,17 +326,19 @@ td {
 
     }
 
-    .hero .inf input, .hero .inf select, textarea{
+    .hero .inf input,
+    .hero .inf select,
+    textarea {
         width: 100%;
     }
 
-    .hero{
+    .hero {
         padding: 40px 20px;
     }
 
     #tableShow {
         display: block;
-        overflow-x:auto;
+        overflow-x: auto;
         text-align: center;
     }
 
@@ -364,7 +388,9 @@ td {
 }
 
 @media screen and (max-width:692px) {
-    #service #card_cont,#service {
+
+    #service #card_cont,
+    #service {
         padding: 40PX 40PX;
     }
 }
@@ -379,27 +405,28 @@ td {
         width: 100%;
     }
 
-    #service #card_cont,#service {
+    #service #card_cont,
+    #service {
         padding: 20PX 20PX;
     }
 
-    #service #card_cont{
+    #service #card_cont {
         justify-content: center;
     }
 
-    #service #card_cont a{
+    #service #card_cont a {
         width: 100%;
     }
 
-    .tit h2{
+    .tit h2 {
         font-size: 32PX;
     }
 
-    .tit h6{
+    .tit h6 {
         font-size: 12PX;
     }
 
-    .slid1{
+    .slid1 {
         background-position: center;
     }
 
@@ -411,4 +438,3 @@ td {
     }
 
 }
-

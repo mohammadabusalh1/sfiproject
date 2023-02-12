@@ -89,8 +89,8 @@ function reload(sql) {
                     + "</td><td>" + data[i].activity_type + "</td><td>" + data[i].activity_details
                     + "</td><td>" + data[i].program_name + "</td><td>" + data[i].project_name
                     + "</td>" + "<td><button data-id=" +
-                    data[i].activity_name + " class=\"remove-btn\">حذف</button></td> <td><button data-id=" +
-                    data[i].activity_name + " class=\"edit-btn\">تعديل</button></td></tr>";
+                    data[i].activity_name + " class=\"remove-btn\">حذف  <i class=\"fa fa-remove\"></i></button></td> <td><button data-id=" +
+                    data[i].activity_name + " class=\"edit-btn\">تعديل  <i class=\"fas fa-edit\"></i></button></td></tr>";
             }
             $(".table").html(ht);
         }

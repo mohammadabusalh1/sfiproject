@@ -39,6 +39,11 @@ h6 {
     font-size: 18px;
 }
 
+.active{
+    color: var(--main-color);
+}
+
+
 button {
     padding: 4px 25px;
     background-color: var(--main-color);
@@ -48,6 +53,10 @@ button {
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
+}
+
+button:hover{
+    opacity: 0.9;
 }
 
 #header {
