@@ -856,8 +856,6 @@
                         data: { sqlAdd: sqlAdd },
                         type: "post",
                         success: function (out) {
-
-                            alert(out);
                             if (out == "successfully") {
                                 if (myArray.length > 0) {
                                     for (i = 0; i < myArray.length; i++) {
@@ -1017,17 +1015,124 @@
                 id = $(this).data('id');
                 table = "project";
                 feild = "project_name";
-                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
-                sql1 = "DELETE FROM `fin_pro` WHERE `" + feild + "` = '" + id + "'";
-                sql2 = "DELETE FROM `goal_pro` WHERE `" + feild + "` = '" + id + "'";
-                sql3 = "DELETE FROM `pro_area` WHERE `" + feild + "` = '" + id + "'";
-                sql4 = "DELETE FROM `targ_pro` WHERE `" + feild + "` = '" + id + "'";
+                let sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+                let sql1 = "DELETE FROM `fin_pro` WHERE `" + feild + "` = '" + id + "'";
+                let sql2 = "DELETE FROM `goal_pro` WHERE `" + feild + "` = '" + id + "'";
+                let sql3 = "DELETE FROM `pro_area` WHERE `" + feild + "` = '" + id + "'";
+                let sql4 = "DELETE FROM `targ_pro` WHERE `" + feild + "` = '" + id + "'";
                 deleteRow(sql);
                 deleteRow(sql1);
                 deleteRow(sql2);
                 deleteRow(sql3);
                 deleteRow(sql4);
-                reload("SELECT * FROM `project`");
+
+
+                let sql12 = "SELECT * FROM `activities` WHERE `project_name` = '" + id + "'";
+                $.ajax({
+                    url: "phpFile/show.php",
+                    data: { sql: sql12 },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+
+                        for (i = 0; i < data.length; i++) {
+
+                            let id = data[i].activity_name;
+                            let table = "activities";
+                            let feild = "activity_name";
+
+                            sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+
+                                }
+                            });
+
+                            sql = "DELETE FROM `activ_bene` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+                                }
+                            });
+
+                            sql = "DELETE FROM `activ_chall` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+                                }
+                            });
+
+                            sql = "DELETE FROM `act_emp` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+                                }
+                            });
+
+                            sql = "DELETE FROM `act_part` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+                                }
+                            });
+
+                            sql = "SELECT * FROM `attachments` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/show.php",
+                                data: { sql: sql },
+                                dataType: "json",
+                                type: "post",
+                                success: function (data) {
+                                    for (i = 0; i < data.length; i++) {
+                                        $.ajax({
+                                            url: "../website/php/removeImage.php",
+                                            data: { name: data[i].attachment },
+                                            type: "get",
+                                            success: function (out) {
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                            sql = "DELETE FROM `attachments` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+
+                                }
+                            });
+
+                            sql = "DELETE FROM `links` WHERE `activity_name`='" + id + "'";
+                            $.ajax({
+                                url: "phpFile/remove.php",
+                                data: { sql: sql },
+                                type: "post",
+                                success: function (out) {
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+                sql = "SELECT * FROM `project`";
+                reload(sql);
+
             });
 
             $(document).on('click', '.edit-btn', function () {

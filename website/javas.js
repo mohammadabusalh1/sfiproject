@@ -48,12 +48,32 @@ $(document).on('click', '.remove-btn', function () {
         }
     });
 
+    sql = "SELECT * FROM `attachments` WHERE `activity_name`='" + id + "'";
+    $.ajax({
+        url: "../controlPanal/phpFile/show.php",
+        data: { sql: sql },
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            for (i = 0; i < data.length; i++) {
+                $.ajax({
+                    url: "php/removeImage.php",
+                    data: { name: data[i].attachment },
+                    type: "get",
+                    success: function (out) {
+                    }
+                });
+            }
+        }
+    });
+
     sql = "DELETE FROM `attachments` WHERE `activity_name`='" + id + "'";
     $.ajax({
         url: "../controlPanal/phpFile/remove.php",
         data: { sql: sql },
         type: "post",
         success: function (out) {
+
         }
     });
 
