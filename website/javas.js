@@ -1,90 +1,93 @@
 $(document).on('click', '.remove-btn', function () {
-    id = $(this).data('id');
-    table = "activities";
-    feild = "activity_name";
-    sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-            reload("SELECT * FROM `activities`");
-        }
-    });
-
-    sql = "DELETE FROM `activ_bene` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-        }
-    });
-
-    sql = "DELETE FROM `activ_chall` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-        }
-    });
-
-    sql = "DELETE FROM `act_emp` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-        }
-    });
-
-    sql = "DELETE FROM `act_part` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-        }
-    });
-
-    sql = "SELECT * FROM `attachments` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/show.php",
-        data: { sql: sql },
-        dataType: "json",
-        type: "post",
-        success: function (data) {
-            for (i = 0; i < data.length; i++) {
-                $.ajax({
-                    url: "php/removeImage.php",
-                    data: { name: data[i].attachment },
-                    type: "get",
-                    success: function (out) {
-                    }
-                });
+    let n = confirm("تأكيد الحذف");
+    if (n) {
+        id = $(this).data('id');
+        table = "activities";
+        feild = "activity_name";
+        sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+                reload("SELECT * FROM `activities`");
             }
-        }
-    });
+        });
 
-    sql = "DELETE FROM `attachments` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
+        sql = "DELETE FROM `activ_bene` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+            }
+        });
 
-        }
-    });
+        sql = "DELETE FROM `activ_chall` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+            }
+        });
 
-    sql = "DELETE FROM `links` WHERE `activity_name`='" + id + "'";
-    $.ajax({
-        url: "../controlPanal/phpFile/remove.php",
-        data: { sql: sql },
-        type: "post",
-        success: function (out) {
-        }
-    });
+        sql = "DELETE FROM `act_emp` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+            }
+        });
+
+        sql = "DELETE FROM `act_part` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+            }
+        });
+
+        sql = "SELECT * FROM `attachments` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/show.php",
+            data: { sql: sql },
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                for (i = 0; i < data.length; i++) {
+                    $.ajax({
+                        url: "php/removeImage.php",
+                        data: { name: data[i].attachment },
+                        type: "get",
+                        success: function (out) {
+                        }
+                    });
+                }
+            }
+        });
+
+        sql = "DELETE FROM `attachments` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+
+            }
+        });
+
+        sql = "DELETE FROM `links` WHERE `activity_name`='" + id + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/remove.php",
+            data: { sql: sql },
+            type: "post",
+            success: function (out) {
+            }
+        });
+    }
 });
 
 let id;
@@ -108,9 +111,9 @@ function reload(sql) {
                     + "</td><td>" + data[i].activity_Governorate + "</td><td>" + data[i].activity_area
                     + "</td><td>" + data[i].activity_type + "</td><td>" + data[i].activity_details
                     + "</td><td>" + data[i].program_name + "</td><td>" + data[i].project_name
-                    + "</td>" + "<td><button data-id=" +
-                    data[i].activity_name + " class=\"remove-btn\">حذف  <i class=\"fa fa-remove\"></i></button></td> <td><button data-id=" +
-                    data[i].activity_name + " class=\"edit-btn\">تعديل  <i class=\"fas fa-edit\"></i></button></td></tr>";
+                    + "</td>" + "<td><button data-id= '" +
+                    data[i].activity_name + "' class=\"remove-btn\">حذف  <i class=\"fa fa-remove\"></i></button></td> <td><button data-id= '" +
+                    data[i].activity_name + "' class=\"edit-btn\">تعديل  <i class=\"fas fa-edit\"></i></button></td></tr>";
             }
             $(".table").html(ht);
         }

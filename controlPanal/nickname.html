@@ -196,6 +196,10 @@
         padding: 20px;
         text-align: center;
         display: none;
+        position: sticky;
+        top: 90px;
+        left: 0;
+        z-index: 5;
     }
 
     #smallList #links2 a h6 {
@@ -361,8 +365,8 @@
 <body dir="rtl">
 
     <script>
-        $(document).ready(function(){
-            if(localStorage.getItem('login')==0 || localStorage.getItem('login')== null){
+        $(document).ready(function () {
+            if (localStorage.getItem('login') == 0 || localStorage.getItem('login') == null) {
                 window.location.replace("../login.html");
             }
         });
@@ -375,8 +379,8 @@
                 success: function (data) {
                     ht = "<tr> <th>المسمى</th> <th>حذف</th></tr>";
                     for (i = 0; i < data.length; i++) {
-                        ht += "<tr><td>" + data[i].nickname + "<td><button data-id=" + 
-                            data[i].nickname + " class=\"remove-btn\">حذف <i class=\"fa fa-remove\"></i></button></td>";
+                        ht += "<tr><td>" + data[i].nickname + "<td><button data-id= '" +
+                            data[i].nickname + "'' class=\"remove-btn\">حذف <i class=\"fa fa-remove\"></i></button></td>";
                     }
                     $(".table").html(ht);
                 }
@@ -399,9 +403,9 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
-                <h6 >البرامج</h6>
+                <h6>البرامج</h6>
             </a>
             <a href="nickname.html">
                 <h6 class="active">المسميات</h6>
@@ -428,7 +432,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
@@ -538,18 +542,22 @@
                 reload(sql);
             });
 
-            $(document).on('click', '.remove-btn', function () {
-                id = $(this).data('id');
-                sql = "DELETE FROM `nicknames` WHERE `nickname` = '" + id + "'";
-                $.ajax({
-                    url: "phpFile/remove.php",
-                    data: { sql:sql },
-                    type: "post",
-                    success: function (out) {
-                        reload("SELECT * FROM `nicknames`");
-                    }
-                });
-                
+            $("#table").on('click', '.remove-btn', function () {
+                let n = confirm("تأكيد الحذف");
+                if (n == true) {
+                    id = $(this).data('id');
+                    sql = "DELETE FROM `nicknames` WHERE `nickname` = '" + id + "'";
+                    $.ajax({
+                        url: "phpFile/remove.php",
+                        data: { sql: sql },
+                        type: "post",
+                        success: function (out) {
+                            reload("SELECT * FROM `nicknames`");
+                        }
+                    });
+                } else {
+                }
+
             });
 
         </script>
@@ -576,7 +584,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>

@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="shortcut icon" href="img/smallLogo.png" />
     <title>المستخدمين</title>
 </head>
@@ -196,6 +196,10 @@
         padding: 20px;
         text-align: center;
         display: none;
+        position: sticky;
+        top: 90px;
+        left: 0;
+        z-index: 5;
     }
 
     #smallList #links2 a h6 {
@@ -357,8 +361,8 @@
 <body dir="rtl">
 
     <script>
-         $(document).ready(function(){
-            if(localStorage.getItem('login')==0 || localStorage.getItem('login')== null){
+        $(document).ready(function () {
+            if (localStorage.getItem('login') == 0 || localStorage.getItem('login') == null) {
                 window.location.replace("../login.html");
             }
         });
@@ -371,7 +375,7 @@
                 success: function (data) {
                     ht = "<tr> <th>الاسم</th> <th>كلمة المرور</th> <th>الصلاحيات</th> <th>الحذف</th><th>النعديل</th></tr>";
                     for (i = 0; i < data.length; i++) {
-                        ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td><button data-id=" + data[i].username + " class=\"remove-btn\">حذف <i class=\"fa fa-remove\" aria-hidden=\"true\"></i></button></td> <td><button data-id=" + data[i].id + " class=\"edit-btn\">تعديل <i class=\"fas fa-edit\"></i></button></td></tr>";
+                        ht += "<tr><td>" + data[i].username + "</td><td>" + data[i].password + "</td><td>" + data[i].permission + "</td> <td><button data-id= '" + data[i].username + "' class=\"remove-btn\">حذف <i class=\"fa fa-remove\" aria-hidden=\"true\"></i></button></td> <td><button data-id= '" + data[i].id + "' class=\"edit-btn\">تعديل <i class=\"fas fa-edit\"></i></button></td></tr>";
                     }
                     $(".table").html(ht);
                 }
@@ -394,7 +398,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
@@ -423,7 +427,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
@@ -542,23 +546,28 @@
                 reload(sql);
             });
 
-            $(document).on('click', '.remove-btn', function () {
-                id = $(this).data('id');
-                table = "users";
-                feild = "username";
-                sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
-                $.ajax({
-                    url: "phpFile/remove.php",
-                    data: { sql:sql },
-                    type: "post",
-                    success: function (out) {
-                        reload("SELECT * FROM `users`");
-                    }
-                });
+
+
+            $("#table").on('click', '.remove-btn', function () {
+                let n = confirm("تأكيد الحذف");
+                if (n) {
+                    id = $(this).data('id');
+                    table = "users";
+                    feild = "username";
+                    sql = "DELETE FROM `" + table + "` WHERE `" + feild + "` = '" + id + "'";
+                    $.ajax({
+                        url: "phpFile/remove.php",
+                        data: { sql: sql },
+                        type: "post",
+                        success: function (out) {
+                            reload("SELECT * FROM `users`");
+                        }
+                    });
+                }
             });
 
             let id;
-            $(document).on('click', '.edit-btn', function () {
+            $("#table").on('click', '.edit-btn', function () {
                 id = $(this).data('id');
                 sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
                 $.ajax({
@@ -576,7 +585,7 @@
                         $("#password").prop("type", "text");
                         $("#password").val(password);
                         $("#pir").val(pir);
-                        
+
                         setTimeout(function () {
                             window.location.replace("users.html#hero");
                         }, 400);
@@ -634,7 +643,7 @@
             <a href="parti.html">
                 <h6>المشاركين</h6>
             </a>
-            
+
             <a href="programs.html">
                 <h6>البرامج</h6>
             </a>
