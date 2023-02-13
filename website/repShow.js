@@ -95,10 +95,10 @@ $(document).ready(function () {
             dataType: "json",
             type: "post",
             success: function (data) {
-               let ht = "<tr><th>التحديات</th></tr>";
+                let ht = "<tr><th>التحديات</th></tr>";
                 for (i = 0; i < data.length; i++) {
 
-                   let sql1 = "SELECT * FROM `challenges` WHERE `challenge_id`='" + data[i].challenge_id + "'";
+                    let sql1 = "SELECT * FROM `challenges` WHERE `challenge_id`='" + data[i].challenge_id + "'";
                     $.ajax({
                         url: "../controlPanal/phpFile/show.php",
                         data: { sql: sql1 },
@@ -179,7 +179,7 @@ $(document).ready(function () {
 
 
         let hty = "<tr> <th colspan=\"2\">المشاركين</th> </tr>";
-        let dataLen =0;
+        let dataLen = 0;
         sql = "SELECT * FROM `act_part` WHERE `activity_name`='" + name + "'";
         $.ajax({
             url: "../controlPanal/phpFile/show.php",
@@ -187,7 +187,7 @@ $(document).ready(function () {
             dataType: "json",
             type: "post",
             success: function (data) {
-                let s=0;
+                let s = 0;
                 for (i = 0; i < data.length; i++) {
                     sql1 = "SELECT * FROM `participants` WHERE `participants_name`='" + data[i].participant_name + "'";
                     $.ajax({
@@ -198,20 +198,38 @@ $(document).ready(function () {
                         success: function (data1) {
                             for (j = 0; j < data1.length; j++) {
                                 hty += '<tr><td> ' + data1[j].participants_name + '</td><td>' + data1[j].nickname + '</td></tr>';
-                                dataLen= data.length;
-                                if(s == data.length-1){
+                                dataLen = data.length;
+                                if (s == data.length - 1) {
                                     hty += "<tr><td colspan=\"2\"> العدد الكلي: " + dataLen + "</td><tr>";
                                     $("#parti_table").html(hty);
-                                }else{
+                                } else {
                                     s++;
                                 }
                             }
                         }
                     });
                 }
-                
-    
 
+
+
+
+            }
+        });
+
+        let sql55 = "SELECT * FROM `activ_bene` WHERE `activity_name`='" + name + "'";
+        $.ajax({
+            url: "../controlPanal/phpFile/show.php",
+            data: { sql: sql55 },
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                let hty = "<tr> <th colspan=\"3\">المستفيدين</th>"+
+                " </tr><tr> <th>الأسم <th>العمر  <th>الجنس</th> </tr>";
+                for (i = 0; i < data.length; i++) {
+                hty += '<tr><td> ' + data[i].beneficiarie_name + '</td><td>' + data[i].beneficiarie_age + 
+                '</td><td>' + data[i].beneficiarie_male + '</td></tr>';
+                }
+                $("#beni_table").html(hty);
 
             }
         });
