@@ -221,6 +221,19 @@ display: none;
    margin-top: 24px;
 }
 
+
+@media screen and (max-width:5800px) {
+    #filter {
+        padding-bottom: 22vw;
+    }
+}
+
+@media screen and (max-width:3800px) {
+    #filter {
+        padding-bottom: 14vw;
+    }
+}
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;

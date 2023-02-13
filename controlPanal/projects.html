@@ -313,6 +313,68 @@
         cursor: pointer;
     }
 
+
+    #info textarea {
+        margin-bottom: 12px;
+    }
+
+    #info div div div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 8px;
+    }
+
+    #info div div p {
+        padding-bottom: 16px;
+        color: #06283D;
+        cursor: pointer;
+    }
+
+    #info div div div select {
+        width: 70%;
+        margin: 0;
+    }
+
+    #edit {
+        display: none;
+    }
+
+    .more {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .more input {
+        margin: 0;
+    }
+
+    .dis {
+        display: none;
+    }
+
+    @media screen and (max-width:5800px) {
+        #tableDis{
+            padding-bottom: 26vw;
+        }
+    }
+
+    @media screen and (max-width:3800px) {
+        #tableDis{
+            padding-bottom: 19vw;
+        }
+    }
+
+    @media screen and (max-width:2800px) {
+        #tableDis{
+            padding-bottom: 8vw;
+        }
+    }
+
     @media screen and (max-width:992px) {
         #links a {
             display: none;
@@ -380,49 +442,6 @@
         #tableDis input {
             padding: 8px 54px;
         }
-    }
-
-    #info textarea {
-        margin-bottom: 12px;
-    }
-
-    #info div div div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        text-align: center;
-        padding-bottom: 8px;
-    }
-
-    #info div div p {
-        padding-bottom: 16px;
-        color: #06283D;
-        cursor: pointer;
-    }
-
-    #info div div div select {
-        width: 70%;
-        margin: 0;
-    }
-
-    #edit {
-        display: none;
-    }
-
-    .more {
-        display: none;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 16px;
-    }
-
-    .more input {
-        margin: 0;
-    }
-
-    .dis {
-        display: none;
     }
 </style>
 
@@ -890,7 +909,7 @@
                                 }
 
                                 alert("تمت الأضافة");
-                            }else{
+                            } else {
                                 alert(out);
                             }
                         }

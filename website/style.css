@@ -233,12 +233,9 @@ footer #box_cont .box h4 {
     width: 100%;
 }
 
-#next,
-#next2,
-#next3,
-#next4 {
+.butt {
     width: 50%;
-    margin: 24px 0;
+    margin: 8px 0;
 }
 
 .add2 {
@@ -276,7 +273,7 @@ textarea {
 }
 
 table {
-    width: 80%;
+    width: 90%;
     margin: 40px 0;
 }
 
@@ -313,9 +310,87 @@ td {
     width: 50.5%;
 }
 
+@media screen and (max-width:5800px) {
+    #tableShow {
+        padding-bottom: 44vh;
+    }
+
+    #he2 {
+        padding-bottom: 42vh;
+    }
+
+    #he3,#he4 {
+        padding-bottom: 64vh;
+    }
+
+    
+}
+
+@media screen and (max-width:4800px) {
+    #tableShow {
+        padding-bottom: 44vh;
+    }
+
+    #he2 {
+        padding-bottom: 42vh;
+    }
+
+    #he3,#he4 {
+        padding-bottom: 52vh;
+    }
+}
+
+@media screen and (max-width:3800px) {
+    #tableShow {
+        padding-bottom: 14vh;
+    }
+
+    #he2 {
+        padding-bottom: 35vh;
+    }
+
+}
+
+@media screen and (max-width:2800px) {
+    #tableShow {
+        padding-bottom: 8vh;
+    }
+
+    #he2 {
+        padding-bottom: 29vh;
+    }
+
+    #he3,#he4 {
+        padding-bottom: 48vh;
+    }
+
+}
+
+@media screen and (max-width:1800px) {
+    #tableShow {
+        padding-bottom: 8vh;
+    }
+
+    #he2 {
+        padding-bottom: 18vh;
+    }
+
+    #he3,#he4 {
+        padding-bottom: 32vh;
+    }
+
+}
+
+
 @media screen and (max-width:1200PX) {
     #service #card_cont {
         width: 60%;
+    }
+}
+
+@media screen and (max-width:1375px) {
+    #he3 {
+        padding-bottom: 16vh;
     }
 }
 

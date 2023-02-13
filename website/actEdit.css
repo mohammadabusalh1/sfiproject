@@ -212,7 +212,23 @@ td {
     direction: ltr;
 }
 
+@media screen and (max-width:5800px) {
+    .hero {
+        padding-bottom: 33vw;
+    }
+}
 
+@media screen and (max-width:3800px) {
+    .hero {
+        padding-bottom: 23vw;
+    }
+}
+
+@media screen and (max-width:2800px) {
+    .hero {
+        padding-bottom: 13vw;
+    }
+}
 
 @media screen and (max-width:1200PX) {
     #service #card_cont {
